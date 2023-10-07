@@ -1,7 +1,16 @@
+import Layout from "../../common/layout/Layout";
+
 export default function Department() {
   return (
-    <>
-      <h1>department</h1>
-    </>
+    <Layout>
+      <p>department</p>
+      <ul>
+        <li>list1</li>
+        <li>list2</li>
+        <li>list3</li>
+        <li>list4</li>
+        <li>list5</li>
+      </ul>
+    </Layout>
   );
 }

@@ -12,7 +12,8 @@ header {
 
     li a {
       color: #555;
-
+      
+      // 부모 선택자 뒤에 띄어쓰기 하면 적용 안됨.
       &.on {
         color: hotpink;
       }
