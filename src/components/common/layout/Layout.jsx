@@ -5,7 +5,7 @@ export default function Layout({ children, title }) {
   // 자식 컴포넌트에서 props.children
   // 해당 컴포넌트로 warpping되고 있는 자식 요소가 전달
   return (
-    <section className="layout">
+    <section className={`layout ${title}`}>
       <h1>{title}</h1>
       {children}
     </section>
