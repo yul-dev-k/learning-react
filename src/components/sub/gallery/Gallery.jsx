@@ -1,7 +1,9 @@
+import Layout from "../../common/layout/Layout";
+
 export default function Gallery() {
   return (
-    <>
-      <h1>Gallery</h1>
-    </>
+    <Layout title={"Gallery"}>
+      <p>test</p>
+    </Layout>
   );
 }
