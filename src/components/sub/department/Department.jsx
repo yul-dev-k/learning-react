@@ -2,7 +2,7 @@ import Layout from "../../common/layout/Layout";
 
 export default function Department() {
   return (
-    <Layout>
+    <Layout title={"Department"}>
       <p>department</p>
       <ul>
         <li>list1</li>

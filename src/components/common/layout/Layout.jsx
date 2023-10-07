@@ -1,12 +1,13 @@
 import "./Layout.scss";
 
 export default function Layout(props) {
-  // console.log(props);
+  console.log(props);
   // 자식 컴포넌트에서 props.children
   // 해당 컴포넌트로 warpping되고 있는 자식 요소가 전달
   return (
     <section className="layout">
-      <h1>{props.children}</h1>
+      <h1>{props.title}</h1>
+      {props.children}
     </section>
   );
 }
