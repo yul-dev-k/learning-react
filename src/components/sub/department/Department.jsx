@@ -1,9 +1,14 @@
 import Layout from "../../common/layout/Layout";
 
 export default function Department() {
+  // 리액트 컴포넌트는 무조건 state에 담겨 있는 값만 변화점을 인지해서 컴포넌트를 재호출 하면서 화면 리렌더
+  let num = 0;
+
   return (
     <Layout title={"Department"}>
-      <p>department</p>
+      <button onClick={() => num - 1}>minus</button>
+      <button onClick={() => num + 1}>plus</button>
+      <h2>{num}</h2>
     </Layout>
   );
 }
