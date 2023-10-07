@@ -2,12 +2,14 @@ import { useState } from "react";
 import Layout from "../../common/layout/Layout";
 
 export default function Department() {
+  /* 바닐라 JS는 static DOM을 강제로 변화를 주기 때문에 느린게 맞았음.
+  그러나 리액트는 가상돔을 이용해서 메모리단에서 계산함하고 변경점이 있어야만 렌더하기 때문에 매 순간 렌더되더라도 느린 것이 아님.
+   */
+  console.log("re-render");
   // useState는 2개의 값이 담겨있는 배열을 반환
   // 첫 번째 값은 인수에 전달된 값을 초기값으로 활용한 state값,
   // 두 번째 값은 해당 state를 변경할 수 있는 state 변경 전용 함수, 무조건 state는 전용 함수로만 변경 가능
   const [num, setNum] = useState(0);
-  console.log(num); // 0
-  console.log(setNum); // 함수
 
   return (
     <Layout title={"Department"}>
