@@ -1,5 +1,7 @@
-import './Gallery.scss';
-
 export default function Gallery() {
-	return <></>;
+  return (
+    <>
+      <h1>Gallery</h1>
+    </>
+  );
 }

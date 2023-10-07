@@ -1,5 +1,7 @@
-import './Members.scss';
-
 export default function Members() {
-	return <></>;
+  return (
+    <>
+      <h1>Member</h1>
+    </>
+  );
 }
