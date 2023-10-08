@@ -15,7 +15,7 @@ export default function Layout({ children, title }) {
     setTimeout(() => {
       refFrame.current.classList.add("on");
     }, 300);
-  }, []);
+  }, []); // 에러 처럼 보이는 이유는 참조형 객체가 (변경될 수도 있는 값이기에) 들어 있어서 '이거 변경될 수도 있는 값 아님?' 이라고 리액트가 생각하기 때문에 이렇게 뜨는 것.
   return (
     <section ref={refFrame} className={`layout ${newClass}`}>
       <h1 ref={refTitle}>{title}</h1>
