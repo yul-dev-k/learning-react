@@ -5,9 +5,11 @@ export default function Modal() {
   const [Num, setNum] = useState(0);
   useEffect(() => {
     console.log("컴포넌트 마운트 시 한 번만 호출");
+    document.body.style.overflow = "hidden";
 
     return () => {
       console.log("컴포넌트 언마운트 시 호출");
+      document.body.style.overflow = "auto";
     };
   }, []);
   useEffect(() => {
