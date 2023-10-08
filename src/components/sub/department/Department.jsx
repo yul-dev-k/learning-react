@@ -7,7 +7,7 @@ export default function Department() {
   const rotate = useRef(0);
 
   // 리액트에서 document.querySelector로 돔 요소를 선택하면 안되는 이유
-  const box = useRef(null);
+  const box = useRef(null); // 처음엔 null -> 이후엔 {current: article} 담김.
 
   const plus = () => {
     ++rotate.current;
