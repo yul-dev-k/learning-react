@@ -1,37 +1,38 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Layout from "../../common/layout/Layout";
+import "./Department.scss";
 
 export default function Department() {
-  /* 
-    그래서 리액트를 왜 써야하는데?
-    - 리액트는 데이터만 신경써주면 됨. 그래서 차후 프로젝트가 커지더라도 유지보수가 쉬워지기 때문에 리액트를 쓰게 됨.
-  */
-  const [num, setNum] = useState(0);
+  console.log("re-render");
+  // 리액트에 state변경이 일어나면 컴포넌트는 재렌더링됨
+  // 바뀐 state 값은 다음번 렌더링 사이클에서 변경된 값이 적용됨
+  // 화면의 정보값을 갱신해야되는 중요한 변경 사항이 아닌 요소를 state로 변경하면 계속해서 컴포넌트가 재렌더링 됨으로 비효율적
+  // 대표적인 사례가 단순한 모션 처리를 위한 state 적용
+  const rotate = useRef(0);
+  let [Num, setNum] = useState(0);
+  // Num++, Num--가 바로 바뀌지 않는 이유
+  const plus = () => {
+    setNum(++Num);
+    console.log(rotate);
+  };
+  const minus = () => {
+    setNum(--Num);
+    console.log(rotate);
+  };
 
   return (
     <Layout title={"Department"}>
-      <button onClick={() => setNum(num - 1)}>minus</button>
-      <button onClick={() => setNum(num + 1)}>plus</button>
-      <h2>{num}</h2>
+      <button onClick={minus}>left</button>
+      <button onClick={plus}>right</button>
+
+      <article style={{ transform: `rotate(${45 * Num}deg)` }}></article>
     </Layout>
   );
 }
 
 /* 
-  리액트 대표적인 hook 3대장
-  useSate
-  - 화면 렌더링을 담당하는 중요 데이터를 관리하는 그릇
-  - 화면의 모든 변경사항은 state에 담아서 관리 및 렌더 해줘야함
-  - state 값이 변경되면 리액트는 무조건 컴포넌트를 재호출 해서 화면을 다시 렌더링 (re-rendering)
+  useRef를 사용해야 하는 실 사례 
+  1. 가상돔요소를 선택해서 제어해야 할 때
+  2. 특정 값을 변경처리할 때 불필요하게 컴포넌트를 재호출하고 싶지 않을때 (특히 모션)
 
-  useEffect
-- 컴포넌트의 생명 주기 관리 (life cycle)
-- 컴포넌트의 생성 (Mount)
-- 컴포넌트의 변경 (State Change)
-- 컴포넌트의 소멸 (UnMount)
-- 컴포넌트의 생성, 변경, 소멸 시 특정 이벤트 호출해야할될 때 주로 사용
-
-  useRef
-  - 컴포넌트가 재호출 되더라도 사라지면 안되는 값을 담는 그릇
-  - 메모리 상에만 존재하는 최신 가상돔을 선택해야될 때 담는 용도
 */
