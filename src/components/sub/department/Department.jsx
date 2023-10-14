@@ -13,22 +13,27 @@ import "./Department.scss";
 const path = process.env.PUBLIC_URL;
 
 export default function Department() {
+  const [Title, setTitle] = useState("");
   const [Department, setDepartment] = useState([]);
 
   useEffect(() => {
     fetch(`${path}/DB/department.json`)
       .then((data) => data.json())
-      .then((json) => setDepartment(json.members));
+      .then((json) => {
+        setTitle(Object.keys(json)[0]);
+        setDepartment(Object.values(json)[0]);
+      });
   }, []);
   return (
     <Layout title={"Department"}>
       <section id="memberBox">
+        <h2>{Title.charAt(0).toUpperCase() + Title.slice(1)}</h2>
         {Department.map((member, idx) => (
           <article key={idx}>
             <div className="pic">
               <img src={`${path}/img/${member.pic}`} alt={member.name} />
             </div>
-            <h2>{member.name}</h2>
+            <h3>{member.name}</h3>
             <p>{member.position}</p>
           </article>
         ))}
