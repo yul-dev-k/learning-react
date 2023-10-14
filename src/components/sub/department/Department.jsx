@@ -15,8 +15,11 @@ const path = process.env.PUBLIC_URL;
 
 export default function Department() {
   const [Title, setTitle] = useState("");
+  // parsing된 json 데이터를 배열에 담음.
   const [Department, setDepartment] = useState([]);
   const [History, setHistory] = useState([]);
+
+  // 커스텀 훅을 다른 훅에서 사용할 수 없으므로 함수 자체를 리턴받아 fetchData라는 변수에 저장. 그리하여 다른 훅에서도 사용할 수 있게끔함.
   const fetchData = useFetch();
 
   useEffect(() => {
