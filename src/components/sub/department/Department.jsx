@@ -30,7 +30,6 @@ export default function Department() {
   return (
     <Layout title={"Department"}>
       <section id="historyBox">
-        <h2>{Title.charAt(0).toUpperCase() + Title.slice(1)}</h2>
         {History.map((el, idx) => (
           // 프래그먼트에 key 값을 주기 위해선 React.Fragment라는 컴포넌트로 바꾸어주면됨.
           <React.Fragment key={idx}>
