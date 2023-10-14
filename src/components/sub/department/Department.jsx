@@ -1,22 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../common/layout/Layout";
 import "./Department.scss";
-import Modal from "../../common/modal/Modal";
+
+/* 리액트에서 외부 데이터 fetching 작업 흐름
+  1. 컴포넌트 함수가 호출되고 외부데이터를 받을 state초기화
+  2. 의존성 배열이 비어있는 useEffect hook 안쪽에서 fetch로 비동기 데이터 받고 state에 넘겨줌
+  3. useEffect 안쪽에서 fetch 문을 써야 하는 이유는 fetch 자체가 web api를 통해서 클라이언트 기반으로 데이터를 전달받는 방식이기 때문에, 무조건 컴포넌트가 마운트 되어야지만 호출 가능
+  4. useEffect에 의해서 데이터가 받아지고 state에 전달되면 자동으로 컴포넌트는 재렌더링됨
+  5. 비동기 데이터를 활용해서 실제 JSX로 동적 DOM을 생성하는 시점은 2번째 렌더링 타임
+*/
+
+const path = process.env.PUBLIC_URL;
 
 export default function Department() {
-  const [Open, setOpen] = useState(false);
+  const [Department, setDepartment] = useState([]);
+
+  useEffect(() => {
+    fetch(`${path}/DB/department.json`)
+      .then((data) => data.json())
+      .then((json) => setDepartment(json.members));
+  }, []);
   return (
     <Layout title={"Department"}>
-      <button onClick={() => setOpen(!Open)}>{Open ? "close" : "open"}</button>
-      {Open && <Modal />}
+      <section id="memberBox">
+        {Department.map((member, idx) => (
+          <article key={idx}>
+            <div className="pic">
+              <img src={`${path}/img/${member.pic}`} alt={member.name} />
+            </div>
+            <h2>{member.name}</h2>
+            <p>{member.position}</p>
+          </article>
+        ))}
+      </section>
     </Layout>
   );
 }
-
-/* 
-  return믄 바깥에는 모든 스크립트 구문을 활용 가능
-  단, JSX 구문 안쪽에서는 {}를 통해서 할 수 있는 연산 3가지
-  1. 변수치환
-  2. map으로 반복 처리
-  3. 삼항연산자 혹은 &&를 통한 분기 처리
-*/
