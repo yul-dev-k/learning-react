@@ -24,6 +24,7 @@
     height: 1px;
     background-color: #000;
     transition: 1s 1s;
+    opacity: 0.8;
   }
   &.on {
     opacity: 1;
@@ -35,7 +36,7 @@
       }
     }
     .bar {
-      width: 200px;
+      width: 80px;
     }
   }
 }
