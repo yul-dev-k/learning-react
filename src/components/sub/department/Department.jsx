@@ -15,17 +15,37 @@ const path = process.env.PUBLIC_URL;
 export default function Department() {
   const [Title, setTitle] = useState("");
   const [Department, setDepartment] = useState([]);
+  const [History, setHistory] = useState([]);
 
   useEffect(() => {
-    fetch(`${path}/DB/department.json`)
+    fetchData(`${path}/DB/department.json`, setDepartment, setTitle);
+  }, []);
+  useEffect(() => {
+    fetchData(`${path}/DB/history.json`, setHistory, setTitle);
+  }, []);
+
+  function fetchData(url, setValue, setKey) {
+    fetch(url)
       .then((data) => data.json())
       .then((json) => {
-        setTitle(Object.keys(json)[0]);
-        setDepartment(Object.values(json)[0]);
+        setKey && setKey(Object.keys(json)[0]);
+        setValue(Object.values(json)[0]);
       });
-  }, []);
+  }
   return (
     <Layout title={"Department"}>
+      <section id="historyBox">
+        <h2>{Title.charAt(0).toUpperCase() + Title.slice(1)}</h2>
+        {History.map((el) => (
+          <article>
+            <h3>{Object.keys(el)}</h3>
+            <ul>
+              {Object.values(el).map((txt) => txt.map((el) => <li>{el}</li>))}
+            </ul>
+          </article>
+        ))}
+      </section>
+
       <section id="memberBox">
         <h2>{Title.charAt(0).toUpperCase() + Title.slice(1)}</h2>
         {Department.map((member, idx) => (
