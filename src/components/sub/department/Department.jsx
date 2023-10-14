@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Layout from "../../common/layout/Layout";
 import "./Department.scss";
+import { useFetch } from "../../../hooks/useFetch";
 
 /* 리액트에서 외부 데이터 fetching 작업 흐름
   1. 컴포넌트 함수가 호출되고 외부데이터를 받을 state초기화
@@ -16,6 +17,7 @@ export default function Department() {
   const [Title, setTitle] = useState("");
   const [Department, setDepartment] = useState([]);
   const [History, setHistory] = useState([]);
+  const fetchData = useFetch();
 
   useEffect(() => {
     fetchData(`${path}/DB/department.json`, setDepartment, setTitle);
@@ -24,14 +26,6 @@ export default function Department() {
     fetchData(`${path}/DB/history.json`, setHistory, setTitle);
   }, []);
 
-  function fetchData(url, setValue, setKey) {
-    fetch(url)
-      .then((data) => data.json())
-      .then((json) => {
-        setKey && setKey(Object.keys(json)[0]);
-        setValue(Object.values(json)[0]);
-      });
-  }
   return (
     <Layout title={"Department"}>
       <section id="historyBox">
