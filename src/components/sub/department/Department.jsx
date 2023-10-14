@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../common/layout/Layout";
 import "./Department.scss";
 import { useFetch } from "../../../hooks/useFetch";
@@ -23,23 +23,24 @@ export default function Department() {
   const fetchData = useFetch();
 
   useEffect(() => {
-    fetchData(`${path}/DB/department.json`, setDepartment, setTitle);
-  }, []);
-  useEffect(() => {
-    fetchData(`${path}/DB/history.json`, setHistory, setTitle);
+    fetchData(`${path}/DB/department.json`, setDepartment, setTitle); // useEffect를 두 번 써줘야하는 줄 알았는데 한 번만 써주고 hook 호출하면 되는 것이었음. 어처피 초기 마운트 이후에 hook을 호출하면 되니까 당연한거임.
+    fetchData(`${path}/DB/history.json`, setHistory);
   }, []);
 
   return (
     <Layout title={"Department"}>
       <section id="historyBox">
         <h2>{Title.charAt(0).toUpperCase() + Title.slice(1)}</h2>
-        {History.map((el) => (
-          <article>
+        {History.map((el, idx) => (
+          // 프래그먼트에 key 값을 주기 위해선 React.Fragment라는 컴포넌트로 바꾸어주면됨.
+          <React.Fragment key={idx}>
             <h3>{Object.keys(el)}</h3>
             <ul>
-              {Object.values(el).map((txt) => txt.map((el) => <li>{el}</li>))}
+              {Object.values(el)[0].map((txt, idx) => (
+                <li key={idx}>{txt}</li>
+              ))}
             </ul>
-          </article>
+          </React.Fragment>
         ))}
       </section>
 
