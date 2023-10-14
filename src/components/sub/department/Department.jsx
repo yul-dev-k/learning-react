@@ -30,17 +30,20 @@ export default function Department() {
   return (
     <Layout title={"Department"}>
       <section id="historyBox">
-        {History.map((el, idx) => (
-          // 프래그먼트에 key 값을 주기 위해선 React.Fragment라는 컴포넌트로 바꾸어주면됨.
-          <React.Fragment key={idx}>
-            <h3>{Object.keys(el)}</h3>
-            <ul>
-              {Object.values(el)[0].map((txt, idx) => (
-                <li key={idx}>{txt}</li>
-              ))}
-            </ul>
-          </React.Fragment>
-        ))}
+        <h2>History</h2>
+        <div className="con">
+          {History.map((el, idx) => (
+            // 프래그먼트에 key 값을 주기 위해선 React.Fragment라는 컴포넌트로 바꾸어주면됨.
+            <div className="inner" key={idx}>
+              <h2>{Object.keys(el)}</h2>
+              <ul>
+                {Object.values(el)[0].map((txt, idx) => (
+                  <li key={idx}>{txt}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section id="memberBox">
