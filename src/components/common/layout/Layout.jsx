@@ -11,7 +11,7 @@ export default function Layout({ children, title }) {
 
   useEffect(() => {
     // 다른 hook에서 custom hook을 사용할 수 있게한 것
-    splitText(refTitle, 0.3, 2);
+    splitText(refTitle, 0.3, 1);
     setTimeout(() => {
       refFrame.current.classList.add("on");
     }, 300);
