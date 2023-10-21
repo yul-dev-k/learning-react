@@ -1,6 +1,7 @@
 import Layout from "../../common/layout/Layout";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import "./Youtube.scss";
 
 export default function Youtube() {
   const [Vids, setVids] = useState([]);
@@ -29,9 +30,13 @@ export default function Youtube() {
         return (
           <article key={idx}>
             <h2>{title}</h2>
-            <p>{desc.length > 250 ? desc.substr(0, 250) + "..." : desc}</p>
-            <span>{date.split("-").join(".")}</span>
-            <em>{time.split("Z")[0]}</em>
+            <div className="txt">
+              <p>{desc.length > 250 ? desc.substr(0, 250) + "..." : desc}</p>
+              <div className="info">
+                <span>{date.split("-").join(".")}</span>
+                <em>{time.split("Z")[0]}</em>
+              </div>
+            </div>
             <div className="pic">
               <Link to={`/detail/${data.id}`}>
                 <img
