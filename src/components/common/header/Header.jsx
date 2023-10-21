@@ -1,4 +1,5 @@
 import "./Header.scss";
+import { HiBars4 } from "react-icons/hi2";
 import { NavLink, Link } from "react-router-dom";
 
 export default function Header() {
@@ -35,6 +36,7 @@ export default function Header() {
           </NavLink>
         </li>
       </ul>
+      <HiBars4 fontSize={20} color="#777" className="bars" />
     </header>
   );
 }

@@ -24,4 +24,19 @@ header {
       }
     }
   }
+
+  .bars {
+    display: none;
+  }
+}
+
+.tablet, .mobile {
+  header {
+    ul {
+      display: none;
+    }
+    .bars {
+      display: block;
+    }
+  }
 }
