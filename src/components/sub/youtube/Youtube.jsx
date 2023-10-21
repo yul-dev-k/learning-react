@@ -23,10 +23,15 @@ export default function Youtube() {
   return (
     <Layout title={"Youtube"}>
       {Vids.map((data, idx) => {
+        const title = data.snippet.title;
+        const desc = data.snippet.description;
+        const [date, time] = data.snippet.publishedAt.split("T");
         return (
           <article key={idx}>
-            <h2>{data.snippet.title}</h2>
-            <p>{data.snippet.description}</p>
+            <h2>{title}</h2>
+            <p>{desc.length > 250 ? desc.substr(0, 250) + "..." : desc}</p>
+            <span>{date.split("-").join(".")}</span>
+            <em>{time.split("Z")[0]}</em>
             <div className="pic">
               <Link to={`/detail/${data.id}`}>
                 <img
