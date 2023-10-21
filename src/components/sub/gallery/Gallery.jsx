@@ -29,7 +29,7 @@ export default function Gallery() {
             <div className="pic">
               <img
                 src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
-                alt={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_b.jpg`}
+                alt={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
               />
             </div>
             <h2>{pic.title}</h2>
