@@ -29,10 +29,18 @@ export default function Gallery() {
             <div className="pic">
               <img
                 src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
-                alt={pic.title}
+                alt={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_b.jpg`}
               />
             </div>
             <h2>{pic.title}</h2>
+
+            <div className="profile">
+              <img
+                src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`}
+                alt={pic.owner}
+              />
+              <span>{pic.owner}</span>
+            </div>
           </article>
         ))}
       </div>
