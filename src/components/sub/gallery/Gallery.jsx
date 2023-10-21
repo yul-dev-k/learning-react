@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 export default function Gallery() {
   const [Pics, setPics] = useState([]);
+  console.log(Pics);
 
   const fetchFlicker = async () => {
     const baseURL =
@@ -23,7 +24,19 @@ export default function Gallery() {
 
   return (
     <Layout title={"Gallery"}>
-      <p>갤러리 상세페이지</p>
+      <div className="frame">
+        {Pics.map((pic, idx) => (
+          <article key={idx}>
+            <div className="pic">
+              <img
+                src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
+                alt={pic.title}
+              />
+            </div>
+            <h2>{pic.title}</h2>
+          </article>
+        ))}
+      </div>
     </Layout>
   );
 }
