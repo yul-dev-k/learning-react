@@ -1,0 +1,52 @@
+.gallery {
+  .frame {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    article {
+      width: 23%;
+      margin-bottom: 40px;
+
+      .pic {
+        width: 100%;
+        margin-bottom: 20px;
+
+        img {
+          width: 100%;
+        }
+      }
+      h2 {
+        font-weight: normal;
+        font-size: 1rem;
+        line-height: 1.2;
+        margin-bottom: 40px;
+      }
+    }
+  }
+}
+
+.laptop {
+  .gallery {
+    article {
+      width: 32%;
+    }
+  }
+}
+
+.tablet {
+  .gallery {
+    article {
+      width: 48%;
+    }
+  }
+}
+
+.mobile {
+  .gallery {
+    article {
+      width: 100%;
+    }
+  }
+}
