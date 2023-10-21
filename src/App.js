@@ -7,12 +7,13 @@ import Gallery from "./components/sub/gallery/Gallery";
 import Members from "./components/sub/members/Members";
 import Detail from "./components/sub/youtube/Detail";
 import Youtube from "./components/sub/youtube/Youtube";
+import { useMedia } from "./hooks/useMedia";
 import "./styles/Global.scss";
 import { Route } from "react-router-dom";
 
 function App() {
   return (
-    <>
+    <main className={useMedia()}>
       <Header />
 
       {/* visual은 main 라우트에만 보여야 하니 /일 때만 보여야함. 그러나 path='/'만 적혀있다면 모든 /가 붙는 경로에 다 보이게 됨. 그러므로 exact 라는 걸 포함해주면 다른 페이지에서 보이지 않음. */}
@@ -32,7 +33,7 @@ function App() {
       <Route path="/detail/:id" component={Detail} />
 
       <Footer />
-    </>
+    </main>
   );
 }
 
