@@ -1,42 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
 
 .layout {
-  width: 70vw;
-  margin: 100px auto;
-  min-height: 60vh;
-  transition: 0.2s;
-  transform: translateY(200px);
-  opacity: 0;
+	width: 70vw;
+	margin: 100px auto;
+	min-height: 60vh;
+	/*
+	transition-property: transform, opacity;
+	transition-duration: 0.5s;
+	*/
+	transition: opacity 0.5s, transform 0.5s;
+	transform: translateY(200px);
+	opacity: 0;
 
-  h1 {
-    font: normal 80px 'nanum myeongjo';
-    color: #444;
-    margin-bottom: 10px;
+	h1 {
+		font: normal 80px/1 'nanum myeongjo';
+		color: #444;
+		margin-bottom: 10px;
 
-    span {
-      opacity: 0;
-      transform: scale(3);
-      transition: 0.5s;
-    }
-  }
-  .bar {
-    width: 0px;
-    height: 1px;
-    background-color: #000;
-    transition: 1s 1s;
-    opacity: 0.8;
-  }
-  &.on {
-    opacity: 1;
-    transform: translateY(0px);
-    h1 {
-      span{
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-    .bar {
-      width: 80px;
-    }
-  }
+		span {
+			opacity: 0;
+			transform: scale(3);
+			transition-duration: 0.5s;
+		}
+	}
+	.bar {
+		width: 0px;
+		height: 1px;
+		background: #000;
+		margin-bottom: 100px;
+		transition: 1s 1s;
+	}
+
+	&.on {
+		opacity: 1;
+		transform: translateY(0px);
+		h1 {
+			span {
+				opacity: 1;
+				transform: scale(1);
+			}
+		}
+		.bar {
+			width: 50px;
+		}
+	}
 }
