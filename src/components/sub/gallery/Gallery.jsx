@@ -37,7 +37,7 @@ export default function Gallery() {
   const activateBtn = (e) => {
     const btns = refElBtnSet.current.querySelectorAll("button");
     btns.forEach((btn) => btn.classList.remove("on"));
-    e.target.classList.add("on");
+    if (e.target.nodeName === "BUTTON") e.target.classList.add("on");
   };
 
   const handleClickInterest = (e) => {
@@ -50,6 +50,10 @@ export default function Gallery() {
     if (e.target.classList.contains("on")) return;
     activateBtn(e);
     fetchFlicker({ type: "user", id: myID });
+  };
+  const handleClickUser = (e) => {
+    activateBtn(e);
+    fetchFlicker({ type: "user", id: e.target.innerText });
   };
 
   useEffect(() => {
@@ -95,15 +99,7 @@ export default function Gallery() {
                       ); // profile 이미지가 없어서 엑박이 뜰 때 대체 이미지를 넣는 방법
                     }}
                   />
-                  <span
-                    onClick={
-                      (e) =>
-                        fetchFlicker({ type: "user", id: e.target.innerText })
-                      // console.log(e.target.innerText)
-                    }
-                  >
-                    {pic.owner}
-                  </span>
+                  <span onClick={handleClickUser}>{pic.owner}</span>
                 </div>
               </div>
             </article>
