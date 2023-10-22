@@ -12,10 +12,11 @@ import { useState, useEffect, useRef } from "react";
 */
 
 export default function Gallery() {
-  const [Pics, setPics] = useState([]);
-  const [IsUser, setIsUser] = useState(true);
-  const refElBtnSet = useRef(null); // 가상돔인 버튼 태그 셀럭터로 가져오기 위한 ref (DOM 요소 가져오는 Ref = refEl)
   const myID = "199380619@N02";
+  const [Pics, setPics] = useState([]);
+  // IsUser의 초기 값을 내 아이디 문자값을 등록
+  let [IsUser, setIsUser] = useState(myID);
+  const refElBtnSet = useRef(null); // 가상돔인 버튼 태그 셀럭터로 가져오기 위한 ref (DOM 요소 가져오는 Ref = refEl)
 
   const fetchFlicker = async (opt) => {
     console.log("fetching");
@@ -45,17 +46,20 @@ export default function Gallery() {
   const handleClickInterest = (e) => {
     //e는 SyntheticBaseEvent {_reactName: 'onClick', _targetInst: null, type: 'click', nativeEvent: PointerEvent, target: button, …} 이다. 태그의 target을 전달하기 위해 e 이벤트를 전달해줌
     if (e.target.classList.contains("on")) return; // 클릭한 버튼에 on class가 있다면 지속적인 fetching 함수가 호출되지 않게함.
-    setIsUser(false);
+    setIsUser(""); // IsUser 값을 빈문자열 처리 (falsy)
     activateBtn(e);
     fetchFlicker({ type: "interest" });
   };
   const handleClickMine = (e) => {
-    if (e.target.classList.contains("on") || IsUser) return;
-    setIsUser(true);
+    // 마이 갤러리 함수 호출시에는 IsUser의 문자값이 담겨있더라도 내 아이디 값이랑 똑같지 않으면 핸들러 호출함
+    // 다른 사용자 갤러리르 갔다가 My Gallery 함수 호출시 이미 IsUser 값이 담겨있기 때문에 해당 함수가 호출되지 않는 문제 해결 위함
+    if (e.target.classList.contains("on") || IsUser === myID) return;
+    setIsUser(myID);
     activateBtn(e);
     fetchFlicker({ type: "user", id: myID });
   };
   const handleClickUser = (e) => {
+    // IsUser 값이 있기만 하면 핸들러 함수 호출 중지
     if (IsUser) return;
     setIsUser(true);
     activateBtn(e);
