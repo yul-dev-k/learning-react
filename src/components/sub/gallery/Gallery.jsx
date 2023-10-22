@@ -54,6 +54,12 @@ export default function Gallery() {
                   <img
                     src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`}
                     alt={pic.owner}
+                    onError={(e) => {
+                      e.target.setAttribute(
+                        "src",
+                        "https://www.flickr.com/images/buddyicon.gif"
+                      ); // profile 이미지가 없어서 엑박이 뜰 때 대체 이미지를 넣는 방법
+                    }}
                   />
                   <span>{pic.owner}</span>
                 </div>
