@@ -13,25 +13,42 @@ import { useState, useEffect } from "react";
 
 export default function Gallery() {
   const [Pics, setPics] = useState([]);
+  const myID = "199380619@N02";
 
-  const fetchFlicker = async () => {
+  const fetchFlicker = async (opt) => {
     const baseURL =
       "https://www.flickr.com/services/rest/?format=json&nojsoncallback=1";
     const key = process.env.REACT_APP_FLICKER_KEY;
+
     const method_interest = "flickr.interestingness.getList";
+    const method_user = "flickr.people.getPhotos";
     const num = 40;
-    const url = `${baseURL}&api_key=${key}&method=${method_interest}&per_page=${num}`;
+    let url = "";
+    const url_interset = `${baseURL}&api_key=${key}&method=${method_interest}&per_page=${num}`;
+    const url_user = `${baseURL}&api_key=${key}&method=${method_user}&per_page=${num}&user_id=${opt.id}`;
+    opt.type === "user" && (url = url_user);
+    opt.type === "interest" && (url = url_interset);
     const data = await fetch(url);
     const json = await data.json();
     setPics(json.photos.photo);
   };
 
   useEffect(() => {
-    fetchFlicker();
+    fetchFlicker({ type: "user", id: myID });
   }, []);
 
   return (
     <Layout title={"Gallery"}>
+      <article className="controls">
+        <nav className="btnSet">
+          <button onClick={() => fetchFlicker({ type: "interest" })}>
+            Interest Gallery
+          </button>
+          <button onClick={() => fetchFlicker({ type: "user", id: myID })}>
+            My Gallery
+          </button>
+        </nav>
+      </article>
       <div className="frame">
         <Masonry
           elementType={"div"}
@@ -44,7 +61,7 @@ export default function Gallery() {
               <div className="inner">
                 <div className="pic">
                   <img
-                    src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
+                    src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_w.jpg`}
                     alt={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
                   />
                 </div>
@@ -61,7 +78,15 @@ export default function Gallery() {
                       ); // profile 이미지가 없어서 엑박이 뜰 때 대체 이미지를 넣는 방법
                     }}
                   />
-                  <span>{pic.owner}</span>
+                  <span
+                    onClick={
+                      (e) =>
+                        fetchFlicker({ type: "user", id: e.target.innerText })
+                      // console.log(e.target.innerText)
+                    }
+                  >
+                    {pic.owner}
+                  </span>
                 </div>
               </div>
             </article>
