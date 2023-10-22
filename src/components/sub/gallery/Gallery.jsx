@@ -42,10 +42,12 @@ export default function Gallery() {
 
   const handleClickInterest = (e) => {
     //e는 SyntheticBaseEvent {_reactName: 'onClick', _targetInst: null, type: 'click', nativeEvent: PointerEvent, target: button, …} 이다. 태그의 target을 전달하기 위해 e 이벤트를 전달해줌
+    if (e.target.classList.contains("on")) return; // 클릭한 버튼에 on class가 있다면 지속적인 fetching 함수가 호출되지 않게함.
     activateBtn(e);
     fetchFlicker({ type: "interest" });
   };
   const handleClickMine = (e) => {
+    if (e.target.classList.contains("on")) return;
     activateBtn(e);
     fetchFlicker({ type: "user", id: myID });
   };
