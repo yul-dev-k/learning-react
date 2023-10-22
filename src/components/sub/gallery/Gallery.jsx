@@ -61,7 +61,7 @@ export default function Gallery() {
   const handleClickUser = (e) => {
     // IsUser 값이 있기만 하면 핸들러 함수 호출 중지
     if (IsUser) return;
-    setIsUser(true);
+    setIsUser(e.target.innerText);
     activateBtn(e);
     fetchFlicker({ type: "user", id: e.target.innerText });
   };
