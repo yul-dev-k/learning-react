@@ -13,7 +13,7 @@ import { useState, useEffect, useRef } from "react";
 
 export default function Gallery() {
   const [Pics, setPics] = useState([]);
-  const refElBtnSet = useRef(null);
+  const refElBtnSet = useRef(null); // 가상돔인 버튼 태그 셀럭터로 가져오기 위한 ref (DOM 요소 가져오는 Ref = refEl)
   const myID = "199380619@N02";
 
   const fetchFlicker = async (opt) => {
@@ -41,6 +41,7 @@ export default function Gallery() {
   };
 
   const handleClickInterest = (e) => {
+    //e는 SyntheticBaseEvent {_reactName: 'onClick', _targetInst: null, type: 'click', nativeEvent: PointerEvent, target: button, …} 이다. 태그의 target을 전달하기 위해 e 이벤트를 전달해줌
     activateBtn(e);
     fetchFlicker({ type: "interest" });
   };
