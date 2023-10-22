@@ -26,12 +26,19 @@ export default function Gallery() {
 
     const method_interest = "flickr.interestingness.getList";
     const method_user = "flickr.people.getPhotos";
+    const method_search = "flickr.photos.search";
+
     const num = 40;
     let url = "";
+
     const url_interset = `${baseURL}&api_key=${key}&method=${method_interest}&per_page=${num}`;
     const url_user = `${baseURL}&api_key=${key}&method=${method_user}&per_page=${num}&user_id=${opt.id}`;
+    const url_search = `${baseURL}&api_key=${key}&method=${method_search}&per_page=${num}&tags=${opt.keyword}`;
+
     opt.type === "user" && (url = url_user);
     opt.type === "interest" && (url = url_interset);
+    opt.type === "search" && (url = url_search);
+
     const data = await fetch(url);
     const json = await data.json();
     setPics(json.photos.photo);
@@ -67,7 +74,8 @@ export default function Gallery() {
   };
 
   useEffect(() => {
-    fetchFlicker({ type: "user", id: myID });
+    // fetchFlicker({ type: "user", id: myID });
+    fetchFlicker({ type: "search", keyword: "ocean" });
   }, []);
 
   return (
