@@ -13,10 +13,12 @@ import { useState, useEffect, useRef } from "react";
 
 export default function Gallery() {
   const [Pics, setPics] = useState([]);
+  const [IsUser, setIsUser] = useState(true);
   const refElBtnSet = useRef(null); // 가상돔인 버튼 태그 셀럭터로 가져오기 위한 ref (DOM 요소 가져오는 Ref = refEl)
   const myID = "199380619@N02";
 
   const fetchFlicker = async (opt) => {
+    console.log("fetching");
     const baseURL =
       "https://www.flickr.com/services/rest/?format=json&nojsoncallback=1";
     const key = process.env.REACT_APP_FLICKER_KEY;
@@ -43,15 +45,19 @@ export default function Gallery() {
   const handleClickInterest = (e) => {
     //e는 SyntheticBaseEvent {_reactName: 'onClick', _targetInst: null, type: 'click', nativeEvent: PointerEvent, target: button, …} 이다. 태그의 target을 전달하기 위해 e 이벤트를 전달해줌
     if (e.target.classList.contains("on")) return; // 클릭한 버튼에 on class가 있다면 지속적인 fetching 함수가 호출되지 않게함.
+    setIsUser(false);
     activateBtn(e);
     fetchFlicker({ type: "interest" });
   };
   const handleClickMine = (e) => {
-    if (e.target.classList.contains("on")) return;
+    if (e.target.classList.contains("on") || IsUser) return;
+    setIsUser(true);
     activateBtn(e);
     fetchFlicker({ type: "user", id: myID });
   };
   const handleClickUser = (e) => {
+    if (IsUser) return;
+    setIsUser(true);
     activateBtn(e);
     fetchFlicker({ type: "user", id: e.target.innerText });
   };
