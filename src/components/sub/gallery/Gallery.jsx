@@ -43,6 +43,9 @@ export default function Gallery() {
 
     const data = await fetch(url);
     const json = await data.json();
+    if (json.photos.photo.length === 0) {
+      return alert("해당 검색어의 결과값이 없습니다.");
+    }
     setPics(json.photos.photo);
   };
 
@@ -80,6 +83,8 @@ export default function Gallery() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const tags = refElInput.current.value;
+    refElInput.current.value = "";
+    if (!tags.trim()) return; // JS에서 trim은 양 옆에 공란 문자열을 없애주는 역할을 해서 스페이스바만 해서 들어온 input을 막아줌
     setIsUser("");
     activateBtn(e);
     fetchFlicker({ type: "search", keyword: tags });
@@ -101,7 +106,9 @@ export default function Gallery() {
 
         <form onSubmit={handleSubmit}>
           <input type="text" placeholder="Search" ref={refElInput} />
-          <LuSearch fontSize={20} color={"#bbb"} className="btnSearch" />
+          <button className="btnSearch">
+            <LuSearch fontSize={20} color={"#bbb"} />
+          </button>
         </form>
       </article>
       <div className="frame">
