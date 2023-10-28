@@ -183,6 +183,6 @@ export default function Gallery() {
           alt=""
         /> */}
       </Modal>
-    </>
+    </>d
   );
 }
