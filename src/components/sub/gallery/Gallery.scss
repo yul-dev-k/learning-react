@@ -122,8 +122,9 @@
 	}
 }
 
-.tablet {
+.tablet{
 	.gallery {
+
 		.frame {
 			article {
 				width: 48%;
@@ -134,9 +135,29 @@
 
 .mobile {
 	.gallery {
+		.controls{
+			.btnSet {
+				width: 100%;
+				margin-bottom: 2rem;
+				justify-content: space-between;
+				button {
+					width: 100%;
+				}
+			}
+			form {
+				width: 100%;
+				justify-content: space-around;
+				input {
+					width: calc(100% - 30px);
+				}
+			}
+		}
 		.frame {
 			article {
 				width: 100%;
+				justify-content: space-between;
+
+
 			}
 		}
 	}

@@ -27,7 +27,7 @@ export default function Modal({ IsOpen, setIsOpen, children }) {
             className="con"
             initial={{ opacity: 0, rotate: 50 }}
             animate={{ opacity: 1, transition: { delay: 1 }, rotate: 0 }}
-            exit={{ opacity: 0, rotate: -50 }}
+            exit={{ opacity: 0, rotate: 0 }}
           >
             {children}
             <motion.span
