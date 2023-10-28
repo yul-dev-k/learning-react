@@ -3,19 +3,15 @@ import "./Modal.scss";
 
 export default function Modal({ IsOpen, setIsOpen }) {
   useEffect(() => {
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
+    document.body.style.overflow = IsOpen ? "hidden" : "auto";
+  }, [IsOpen]);
 
   return (
     <>
       {IsOpen && (
         <aside className="modal">
           <div className="con">
-            <span>Close</span>
+            <span onClick={() => setIsOpen(false)}>Close</span>
           </div>
         </aside>
       )}

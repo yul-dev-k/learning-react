@@ -19,9 +19,10 @@ export default function Gallery() {
   // IsUser의 초기 값을 내 아이디 문자값을 등록
   let [IsUser, setIsUser] = useState(myID);
   let [CurrentType, setCurrentType] = useState("mine");
-  let [IsOpen, setIsOpen] = useState(true);
+  let [IsOpen, setIsOpen] = useState(false);
   const refElBtnSet = useRef(null); // 가상돔인 버튼 태그 셀럭터로 가져오기 위한 ref (DOM 요소 가져오는 Ref = refEl)
   const refElInput = useRef(null);
+  const refElImg = useRef(null);
 
   const fetchFlicker = async (opt) => {
     console.log("fetching");
@@ -90,6 +91,10 @@ export default function Gallery() {
     setCurrentType("user");
   };
 
+  const handleModal = () => {
+    setIsOpen(true);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const tags = refElInput.current.value;
@@ -133,10 +138,11 @@ export default function Gallery() {
             {Pics.map((pic, idx) => (
               <article key={idx}>
                 <div className="inner">
-                  <div className="pic">
+                  <div className="pic" onClick={handleModal}>
                     <img
                       src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_w.jpg`}
                       alt={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
+                      ref={refElImg}
                     />
                   </div>
                   <h2>{pic.title}</h2>
