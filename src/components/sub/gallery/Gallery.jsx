@@ -18,6 +18,7 @@ export default function Gallery() {
   // IsUser의 초기 값을 내 아이디 문자값을 등록
   let [IsUser, setIsUser] = useState(myID);
   const refElBtnSet = useRef(null); // 가상돔인 버튼 태그 셀럭터로 가져오기 위한 ref (DOM 요소 가져오는 Ref = refEl)
+  const refElInput = useRef(null);
 
   const fetchFlicker = async (opt) => {
     console.log("fetching");
@@ -58,6 +59,7 @@ export default function Gallery() {
     activateBtn(e);
     fetchFlicker({ type: "interest" });
   };
+
   const handleClickMine = (e) => {
     // 마이 갤러리 함수 호출시에는 IsUser의 문자값이 담겨있더라도 내 아이디 값이랑 똑같지 않으면 핸들러 호출함
     // 다른 사용자 갤러리르 갔다가 My Gallery 함수 호출시 이미 IsUser 값이 담겨있기 때문에 해당 함수가 호출되지 않는 문제 해결 위함
@@ -66,6 +68,7 @@ export default function Gallery() {
     activateBtn(e);
     fetchFlicker({ type: "user", id: myID });
   };
+
   const handleClickUser = (e) => {
     // IsUser 값이 있기만 하면 핸들러 함수 호출 중지
     if (IsUser) return;
@@ -74,9 +77,16 @@ export default function Gallery() {
     fetchFlicker({ type: "user", id: e.target.innerText });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const tags = refElInput.current.value;
+    setIsUser("");
+    activateBtn(e);
+    fetchFlicker({ type: "search", keyword: tags });
+  };
+
   useEffect(() => {
     fetchFlicker({ type: "user", id: myID });
-    // fetchFlicker({ type: "search", keyword: "ocean" });
   }, []);
 
   return (
@@ -89,8 +99,8 @@ export default function Gallery() {
           </button>
         </nav>
 
-        <form>
-          <input type="text" placeholder="Search" />
+        <form onSubmit={handleSubmit}>
+          <input type="text" placeholder="Search" ref={refElInput} />
           <LuSearch fontSize={20} color={"#bbb"} className="btnSearch" />
         </form>
       </article>
