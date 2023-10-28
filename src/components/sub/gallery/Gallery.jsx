@@ -19,6 +19,7 @@ export default function Gallery() {
   // IsUser의 초기 값을 내 아이디 문자값을 등록
   let [IsUser, setIsUser] = useState(myID);
   let [CurrentType, setCurrentType] = useState("mine");
+  let [IsOpen, setIsOpen] = useState(true);
   const refElBtnSet = useRef(null); // 가상돔인 버튼 태그 셀럭터로 가져오기 위한 ref (DOM 요소 가져오는 Ref = refEl)
   const refElInput = useRef(null);
 
@@ -159,7 +160,8 @@ export default function Gallery() {
           </Masonry>
         </div>
       </Layout>
-      <Modal></Modal>
+      {/* 모달 호출 시 출력 유무를 결정하는 state 값과 state 변경함수를 모달의 props로 전달 - 이유: 모달이 열고 닫는 거를 부모가 아닌 자식 컴포넌트에서 결정하게 하기 위함 */}
+      <Modal IsOpen={IsOpen} setIsOpen={setIsOpen}></Modal>
     </>
   );
 }
