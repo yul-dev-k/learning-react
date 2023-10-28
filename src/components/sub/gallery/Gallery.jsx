@@ -2,6 +2,7 @@ import Layout from "../../common/layout/Layout";
 import "./Gallery.scss";
 import Masonry from "react-masonry-component";
 import { useState, useEffect, useRef } from "react";
+import { LuSearch } from "react-icons/lu";
 
 /* 
   리액트 컴포넌트에 massorny ul 적용 방법
@@ -74,8 +75,8 @@ export default function Gallery() {
   };
 
   useEffect(() => {
-    // fetchFlicker({ type: "user", id: myID });
-    fetchFlicker({ type: "search", keyword: "ocean" });
+    fetchFlicker({ type: "user", id: myID });
+    // fetchFlicker({ type: "search", keyword: "ocean" });
   }, []);
 
   return (
@@ -87,6 +88,11 @@ export default function Gallery() {
             My Gallery
           </button>
         </nav>
+
+        <form>
+          <input type="text" placeholder="Search" />
+          <LuSearch fontSize={20} color={"#bbb"} className="btnSearch" />
+        </form>
       </article>
       <div className="frame">
         <Masonry
