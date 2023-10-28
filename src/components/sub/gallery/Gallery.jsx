@@ -20,9 +20,9 @@ export default function Gallery() {
   let [IsUser, setIsUser] = useState(myID);
   let [CurrentType, setCurrentType] = useState("mine");
   let [IsOpen, setIsOpen] = useState(false);
+  const [Index, setIndex] = useState(0);
   const refElBtnSet = useRef(null); // 가상돔인 버튼 태그 셀럭터로 가져오기 위한 ref (DOM 요소 가져오는 Ref = refEl)
   const refElInput = useRef(null);
-  const refElImg = useRef(null);
 
   const fetchFlicker = async (opt) => {
     console.log("fetching");
@@ -91,7 +91,8 @@ export default function Gallery() {
     setCurrentType("user");
   };
 
-  const handleModal = () => {
+  const handleModal = (idx) => {
+    setIndex(idx);
     setIsOpen(true);
   };
 
@@ -138,11 +139,10 @@ export default function Gallery() {
             {Pics.map((pic, idx) => (
               <article key={idx}>
                 <div className="inner">
-                  <div className="pic" onClick={handleModal}>
+                  <div className="pic" onClick={() => handleModal(idx)}>
                     <img
                       src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_w.jpg`}
                       alt={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
-                      ref={refElImg}
                     />
                   </div>
                   <h2>{pic.title}</h2>
@@ -167,7 +167,12 @@ export default function Gallery() {
         </div>
       </Layout>
       {/* 모달 호출 시 출력 유무를 결정하는 state 값과 state 변경함수를 모달의 props로 전달 - 이유: 모달이 열고 닫는 거를 부모가 아닌 자식 컴포넌트에서 결정하게 하기 위함 */}
-      <Modal IsOpen={IsOpen} setIsOpen={setIsOpen}></Modal>
+      <Modal IsOpen={IsOpen} setIsOpen={setIsOpen}>
+        <img
+          src={`https://live.staticflickr.com/${Pics[Index]?.server}/${Pics[Index]?.id}_${Pics[Index]?.secret}_w.jpg`}
+          alt=""
+        />
+      </Modal>
     </>
   );
 }
