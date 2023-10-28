@@ -92,7 +92,9 @@ export default function Gallery() {
   };
 
   const handleModal = (idx) => {
+    // Modal 안의 컨텐츠를 출력하기 위한 state
     setIndex(idx);
+    // 클릭한 썸네일의 순번값을 전달하기 위한 state
     setIsOpen(true);
   };
 
@@ -168,10 +170,18 @@ export default function Gallery() {
       </Layout>
       {/* 모달 호출 시 출력 유무를 결정하는 state 값과 state 변경함수를 모달의 props로 전달 - 이유: 모달이 열고 닫는 거를 부모가 아닌 자식 컴포넌트에서 결정하게 하기 위함 */}
       <Modal IsOpen={IsOpen} setIsOpen={setIsOpen}>
-        <img
+        {/* 첫번째 렌더링 사이클에서 배열값이 비어있는 경우는 에러가 아니지만 없는 객체의 특정 property 접근은 에러 상황이기 때문에 해당 객체값이 있을때에만 특정 요소를 렌더링하게 되거나 아니면 옵셔널 체이닝 처리를 해서 첫번째 렌더링시의 오류 해결 */}
+        {Pics[Index] && (
+          <img
+            src={`https://live.staticflickr.com/${Pics[Index]?.server}/${Pics[Index]?.id}_${Pics[Index]?.secret}_w.jpg`}
+            alt=""
+          />
+        )}
+
+        {/* <img
           src={`https://live.staticflickr.com/${Pics[Index]?.server}/${Pics[Index]?.id}_${Pics[Index]?.secret}_w.jpg`}
           alt=""
-        />
+        /> */}
       </Modal>
     </>
   );
