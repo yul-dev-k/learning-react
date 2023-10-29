@@ -5,17 +5,12 @@ import Layout from "../../common/layout/Layout";
 import "./Community.scss";
 
 export default function Community() {
-  // 1. 로컬저장소의 값을 가져와서 객체화한 다음 리턴하는 함수
   const getLocalData = () => {
-    // 처음 컴포넌트 마운트 시에는 로컬 저장소에 아무런 값이 없기 떄문에 undefiend 리턴하면서 에러 발생
     const data = localStorage.getItem("posts");
-    // 로컬저장소에 값이 있을 때에만 객체로 변환해서 리턴
     if (data) return JSON.parse(data);
-    // 처음 마운트시 로컬저장소에 값이 없으면 빈 배열 리털
     else return [];
   };
-  // 2. 컴포넌트가 마운되지마자 로컬저장소에서 가져온 배열값을 Posts state에 옮겨담음
-  const [Posts, setPost] = useState(getLocalData());
+  const [Posts, setPosts] = useState(getLocalData());
   const refInput = useRef(null);
   const refTextarea = useRef(null);
 
@@ -26,7 +21,7 @@ export default function Community() {
       alert("제목 또는 본문을 입력하세요.");
       resetPost();
     }
-    setPost([
+    setPosts([
       // 먼저 쓴 글이 밑으로 가게끔
       { title: refInput.current.value, content: refTextarea.current.value },
       ...Posts,
@@ -34,13 +29,21 @@ export default function Community() {
     resetPost();
   };
 
+  const deletePost = (delIdx) => {
+    console.log(delIdx);
+    // === 였을 때는 내가 선택한 것 외에 모두가 사라짐. (필터의 특성)
+    // 그래서 !==으로 바꿔주면 선택한 것만 사라짐.
+    // Posts.filter로 전달되는 삭제 순번과 현재 반복되는 값의 순번이 같지가 않는것만 배열로 반환 (삭제 순번 값만 제외하고 반환하기 떄문에. 결과적으로 삭제와 동일한 기능)
+    // 삭제 순번 글만 제외한 나머지 배열 값을 다시 setPosts로 기존 Posts 값을 변경하면 컴퍼넌트가 재렌더링 되면서 해당 글만 제외된 나머지 글만 출력
+    // 해당 구문에서는 filter 자체가 불변성을 유지하면서 새로운 배열을 리턴하기 때문에 굳이 전개 연산자로 기존 state 값을 Deep Copy할 필요가 없음.
+    setPosts(Posts.filter((_, idx) => delIdx !== idx));
+  };
   const resetPost = () => {
     refInput.current.value = "";
     refTextarea.current.value = "";
   };
 
   useEffect(() => {
-    // 5. Posts state값이 변경될 때마다 해당 값을 문자화해서 로컬저장소에 저장
     localStorage.setItem("posts", JSON.stringify(Posts));
   }, [Posts]);
 
@@ -60,14 +63,12 @@ export default function Community() {
             <button onClick={resetPost}>
               <MdCancel color={"#555"} fontSize="20" />
             </button>
-            {/* 4. 글 작성 시 state값 변경 처리 */}
             <button onClick={createPost}>
               <TfiWrite color={"#555"} fontSize="20" />
             </button>
           </nav>
         </div>
         <div className="showBox">
-          {/* 3. 로컬 저장소로부터 옮겨 담아진 state값을 반복 돌면서 글 목록 출력 */}
           {Posts.map((post, idx) => (
             <article key={idx}>
               <div className="txt">
@@ -76,7 +77,7 @@ export default function Community() {
               </div>
               <nav>
                 <button>Edit</button>
-                <button>Delete</button>
+                <button onClick={() => deletePost(idx)}>Delete</button>
               </nav>
             </article>
           ))}
