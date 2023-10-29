@@ -7,8 +7,12 @@ import "./Community.scss";
 export default function Community() {
   // 1. 로컬저장소의 값을 가져와서 객체화한 다음 리턴하는 함수
   const getLocalData = () => {
+    // 처음 컴포넌트 마운트 시에는 로컬 저장소에 아무런 값이 없기 떄문에 undefiend 리턴하면서 에러 발생
     const data = localStorage.getItem("posts");
-    return JSON.parse(data);
+    // 로컬저장소에 값이 있을 때에만 객체로 변환해서 리턴
+    if (data) return JSON.parse(data);
+    // 처음 마운트시 로컬저장소에 값이 없으면 빈 배열 리털
+    else return [];
   };
   // 2. 컴포넌트가 마운되지마자 로컬저장소에서 가져온 배열값을 Posts state에 옮겨담음
   const [Posts, setPost] = useState(getLocalData());
