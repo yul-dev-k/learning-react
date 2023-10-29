@@ -1,12 +1,34 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { TfiWrite } from "react-icons/tfi";
 import { MdCancel } from "react-icons/md";
 import Layout from "../../common/layout/Layout";
 import "./Community.scss";
 
 export default function Community() {
+  const [Posts, setPost] = useState([]);
   const refInput = useRef(null);
   const refTextarea = useRef(null);
+
+  const createPost = () => {
+    // 기존의 Post 배열 값을 Deep Copy한 다음 새로운 객체 값을 추가 (불변성 유지)
+
+    if (!refInput.current.value.trim() || !refTextarea.current.value.trim()) {
+      alert("제목 또는 본문을 입력하세요.");
+      resetPost();
+    }
+    setPost([
+      // 먼저 쓴 글이 밑으로 가게끔
+      { title: refInput.current.value, content: refTextarea.current.value },
+      ...Posts,
+    ]);
+    resetPost();
+  };
+
+  const resetPost = () => {
+    refInput.current.value = "";
+    refTextarea.current.value = "";
+  };
+
   return (
     <Layout title={"Community"}>
       <div className="wrap">
@@ -20,15 +42,22 @@ export default function Community() {
           ></textarea>
 
           <nav>
-            <button>
+            <button onClick={resetPost}>
               <MdCancel color={"#555"} fontSize="20" />
             </button>
-            <button>
+            <button onClick={createPost}>
               <TfiWrite color={"#555"} fontSize="20" />
             </button>
           </nav>
         </div>
-        <div className="showBox"></div>
+        <div className="showBox">
+          {Posts.map((post, idx) => (
+            <article key={idx}>
+              <h2>{post.title}</h2>
+              <p>{post.content}</p>
+            </article>
+          ))}
+        </div>
       </div>
     </Layout>
   );
