@@ -5,7 +5,13 @@ import Layout from "../../common/layout/Layout";
 import "./Community.scss";
 
 export default function Community() {
-  const [Posts, setPost] = useState([]);
+  // 1. 로컬저장소의 값을 가져와서 객체화한 다음 리턴하는 함수
+  const getLocalData = () => {
+    const data = localStorage.getItem("posts");
+    return JSON.parse(data);
+  };
+  // 2. 컴포넌트가 마운되지마자 로컬저장소에서 가져온 배열값을 Posts state에 옮겨담음
+  const [Posts, setPost] = useState(getLocalData());
   const refInput = useRef(null);
   const refTextarea = useRef(null);
 
@@ -30,14 +36,8 @@ export default function Community() {
   };
 
   useEffect(() => {
-    // 문자열로 바꿔줘야 하기 때문에 JOSN.stringfy 메서드를 사용함
+    // 5. Posts state값이 변경될 때마다 해당 값을 문자화해서 로컬저장소에 저장
     localStorage.setItem("posts", JSON.stringify(Posts));
-    /* 그런데 이렇게 해두고 새로 고침하면 화면에서도 사라지고, localStorage에서도 사라짐.
-    - 그 이유는 이 값이 마운트된 이후 담은 state 값을 로컬저장소에 넣어주는 것임으로
-    - 브라우저를 새로 고침 해주면 이미 있던 state의 값이 사라지게 되는 것.
-    - 즉, state가 초기화가 됨으로 로컬저장소의 값도 Posts 초기 값인 빈 배열로 초기화됨 
-    -> 화면에도 보여지는 게 없어지고, 로컬저장소 값도 사라짐
-    */
   }, [Posts]);
 
   return (
@@ -56,12 +56,14 @@ export default function Community() {
             <button onClick={resetPost}>
               <MdCancel color={"#555"} fontSize="20" />
             </button>
+            {/* 4. 글 작성 시 state값 변경 처리 */}
             <button onClick={createPost}>
               <TfiWrite color={"#555"} fontSize="20" />
             </button>
           </nav>
         </div>
         <div className="showBox">
+          {/* 3. 로컬 저장소로부터 옮겨 담아진 state값을 반복 돌면서 글 목록 출력 */}
           {Posts.map((post, idx) => (
             <article key={idx}>
               <div className="txt">
