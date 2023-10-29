@@ -84,4 +84,8 @@ export default function Community() {
   - 문자값만 저장 가능 (5MB)
   - 객체값을 문자화 시켜서 저장
   - 로컬 저장소의 값을 불러올 때는 반대로 문자형태를 JSON 형태로 객체로 parsing해서 가져옴
+
+  local storage 사용 방법
+  localStorage.setItem('키', 문자화된 데이터) : 로컬 저장소에 데이터 저장
+  localStorage.getItem('키') : 해당 데이터는 문자값으로 리턴되기 때문에 객체 형태로 parsing 처리 필요
 */
