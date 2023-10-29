@@ -1,2 +1,17 @@
 .community {
+  .wrap {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .inputBox {
+      width: 30%;
+      padding-right: 50px;
+    }
+    .showBox {
+      width: 70%;
+      padding-left: 50px;
+      border-left: 1px solid #ddd;
+    }
+  }
 }

@@ -9,23 +9,26 @@ export default function Community() {
   const refTextarea = useRef(null);
   return (
     <Layout title={"Community"}>
-      <div className="inputBox">
-        <input type="text" ref={refInput} placeholder="title" />
-        <textarea
-          cols="30"
-          rows="3"
-          placeholder="leave messages"
-          ref={refTextarea}
-        ></textarea>
+      <div className="wrap">
+        <div className="inputBox">
+          <input type="text" ref={refInput} placeholder="title" />
+          <textarea
+            cols="30"
+            rows="3"
+            placeholder="leave messages"
+            ref={refTextarea}
+          ></textarea>
 
-        <nav>
-          <button>
-            <MdCancel color={"#555"} fontSize="20" />
-          </button>
-          <button>
-            <TfiWrite color={"#555"} fontSize="20" />
-          </button>
-        </nav>
+          <nav>
+            <button>
+              <MdCancel color={"#555"} fontSize="20" />
+            </button>
+            <button>
+              <TfiWrite color={"#555"} fontSize="20" />
+            </button>
+          </nav>
+        </div>
+        <div className="showBox"></div>
       </div>
     </Layout>
   );
