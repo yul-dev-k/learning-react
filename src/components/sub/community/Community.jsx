@@ -11,6 +11,7 @@ export default function Community() {
     else return [];
   };
   const [Posts, setPosts] = useState(getLocalData());
+
   const refInput = useRef(null);
   const refTextarea = useRef(null);
 
@@ -21,9 +22,20 @@ export default function Community() {
       alert("제목 또는 본문을 입력하세요.");
       resetPost();
     }
+
+    //현재 전세계 표준 시간값에서 getTime()을 호출하면 표준 시간값을 밀리세컨드단위의 숫자값으로 반환
+    //표준시값에 한국시간에 9시간 빠르므로 9시간에 대한 밀리세컨드값을 더해줌 (korTime)
+    //korTime : 한국시간대를 밀리세컨드로 반환한값
+    const korTime = new Date().getTime() + 1000 * 60 * 60 * 9;
+
+    //new Date(한국밀리세컨드시간값) --> 한국 시간값을 기준으로해서 시간객체값 반환
+
     setPosts([
-      // 먼저 쓴 글이 밑으로 가게끔
-      { title: refInput.current.value, content: refTextarea.current.value },
+      {
+        title: refInput.current.value,
+        content: refTextarea.current.value,
+        date: new Date(korTime),
+      },
       ...Posts,
     ]);
     resetPost();
@@ -74,6 +86,7 @@ export default function Community() {
               <div className="txt">
                 <h2>{post.title}</h2>
                 <p>{post.content}</p>
+                {/* <p>{post.date}</p> */}
               </div>
               <nav>
                 <button>Edit</button>
