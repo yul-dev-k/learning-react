@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TfiWrite } from "react-icons/tfi";
 import { MdCancel } from "react-icons/md";
 import Layout from "../../common/layout/Layout";
@@ -28,6 +28,17 @@ export default function Community() {
     refInput.current.value = "";
     refTextarea.current.value = "";
   };
+
+  useEffect(() => {
+    // 문자열로 바꿔줘야 하기 때문에 JOSN.stringfy 메서드를 사용함
+    localStorage.setItem("posts", JSON.stringify(Posts));
+    /* 그런데 이렇게 해두고 새로 고침하면 화면에서도 사라지고, localStorage에서도 사라짐.
+    - 그 이유는 이 값이 마운트된 이후 담은 state 값을 로컬저장소에 넣어주는 것임으로
+    - 브라우저를 새로 고침 해주면 이미 있던 state의 값이 사라지게 되는 것.
+    - 즉, state가 초기화가 됨으로 로컬저장소의 값도 Posts 초기 값인 빈 배열로 초기화됨 
+    -> 화면에도 보여지는 게 없어지고, 로컬저장소 값도 사라짐
+    */
+  }, [Posts]);
 
   return (
     <Layout title={"Community"}>
@@ -88,4 +99,6 @@ export default function Community() {
   local storage 사용 방법
   localStorage.setItem('키', 문자화된 데이터) : 로컬 저장소에 데이터 저장
   localStorage.getItem('키') : 해당 데이터는 문자값으로 리턴되기 때문에 객체 형태로 parsing 처리 필요
+
+  Posts state가 바뀔 때 마다 담겨야하니, useEffect에 Posts state 의존성을 사용
 */
