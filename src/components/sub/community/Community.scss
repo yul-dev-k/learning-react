@@ -7,7 +7,31 @@
     .inputBox {
       width: 30%;
       padding-right: 50px;
+      input,
+      textarea {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #777;
+        padding: 5px 10px;
+        font-size: 1rem/1.2;
+        color: #555;
+        margin-bottom: 20px;
+        resize: none;
+
+        nav {
+          width: 100%;
+          display: flex;
+          justify-content: flex-end;
+          gap: 20px;
+
+          button {
+            border: none;
+            background: transparent;
+          }
+        }
+      }
     }
+
     .showBox {
       width: 70%;
       padding-left: 50px;
