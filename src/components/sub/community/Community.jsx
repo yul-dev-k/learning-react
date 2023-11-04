@@ -11,6 +11,7 @@ export default function Community() {
     else return [];
   };
   const [Posts, setPosts] = useState(getLocalData());
+  const [Allowed, setAllowed] = useState(true);
   console.log(Posts);
   const refInput = useRef(null);
   const refTextarea = useRef(null);
@@ -47,6 +48,10 @@ export default function Community() {
   };
 
   const enableUpdate = (editIdx) => {
+    // Allowed값이 true일 때에만 수정 모드 진입 가능하게 처리
+    if (!Allowed) return;
+    // 일단 수정 모드 진입하면 Allowed값을 false로 변경해서 추가적으로 수정 모드 진입 불가 처리
+    setAllowed(false);
     setPosts(
       // 기존의 Posts 배열을 반복을 돌면서 파라미터로 전달된 editIdx 순번에 해당되는 post 객체만 enableUpdate=true 값을 추가한 객체의 배열값을
       // 다시 기존 Posts에 변경
@@ -58,6 +63,8 @@ export default function Community() {
   };
 
   const disableUpdate = (cancelIdx) => {
+    // 수정 취소 시 다시 Allowed값 true 변경해서 수정모드 가능하게 변경
+    setAllowed(true);
     setPosts(
       Posts.map((post, idx) => {
         if (cancelIdx === idx) post.enableUpdate = false;
@@ -72,6 +79,8 @@ export default function Community() {
       !refEditTextarea.current.value.trim()
     )
       return alert("수정할 글의 제목과 본문을 입력하세요.");
+    // 수정 완료 시 다시 Allowed값 true 변경해서 수정모드 가능하게 변경
+    setAllowed(true);
     setPosts(
       Posts.map((post, idx) => {
         // 전달된 수정번호와 현재 반복도는 post 순번이 같으면
