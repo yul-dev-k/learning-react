@@ -11,9 +11,12 @@ export default function Community() {
     else return [];
   };
   const [Posts, setPosts] = useState(getLocalData());
+  const [EditPost, setEditPost] = useState();
   console.log(Posts);
   const refInput = useRef(null);
   const refTextarea = useRef(null);
+  const refEditInput = useRef(null);
+  const refEditTextarea = useRef(null);
 
   const createPost = () => {
     if (!refInput.current.value.trim() || !refTextarea.current.value.trim()) {
@@ -43,6 +46,27 @@ export default function Community() {
     // 해당 구문에서는 filter 자체가 불변성을 유지하면서 새로운 배열을 리턴하기 때문에 굳이 전개 연산자로 기존 state 값을 Deep Copy할 필요가 없음.
     setPosts(Posts.filter((_, idx) => delIdx !== idx));
   };
+
+  const enableUpdate = (editIdx) => {
+    setPosts(
+      // 기존의 Posts 배열을 반복을 돌면서 파라미터로 전달된 editIdx 순번에 해당되는 post 객체만 enableUpdate=true 값을 추가한 객체의 배열값을
+      // 다시 기존 Posts에 변경
+      Posts.map((post, idx) => {
+        if (editIdx === idx) post.enableUpdate = true;
+        return post;
+      })
+    );
+  };
+
+  const disableUpdate = (cancelIdx) => {
+    setPosts(
+      Posts.map((post, idx) => {
+        if (cancelIdx === idx) post.enableUpdate = false;
+        return post;
+      })
+    );
+  };
+
   const resetPost = () => {
     refInput.current.value = "";
     refTextarea.current.value = "";
@@ -82,19 +106,38 @@ export default function Community() {
               .split("-")
               .join(".");
 
-            return (
-              <article key={idx}>
-                <div className="txt">
-                  <h2>{post.title}</h2>
-                  <p>{post.content}</p>
-                  <span>{textedDate}</span>
-                </div>
-                <nav>
-                  <button>Edit</button>
-                  <button onClick={() => deletePost(idx)}>Delete</button>
-                </nav>
-              </article>
-            );
+            if (post.enableUpdate) {
+              // 수정 모드
+              return (
+                <article key={idx}>
+                  <div className="txt">
+                    <input type="text" defaultValue={post.title} />
+                    <textarea defaultValue={post.content}></textarea>
+
+                    <span>{textedDate}</span>
+                  </div>
+                  <nav>
+                    <button onClick={() => disableUpdate(idx)}>Cancel</button>
+                    <button>Update</button>
+                  </nav>
+                </article>
+              );
+            } else {
+              // 출력 모드
+              return (
+                <article key={idx}>
+                  <div className="txt">
+                    <h2>{post.title}</h2>
+                    <p>{post.content}</p>
+                    <span>{textedDate}</span>
+                  </div>
+                  <nav>
+                    <button onClick={() => enableUpdate(idx)}>Edit</button>
+                    <button onClick={() => deletePost(idx)}>Delete</button>
+                  </nav>
+                </article>
+              );
+            }
           })}
         </div>
       </div>
