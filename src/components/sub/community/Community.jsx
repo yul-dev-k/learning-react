@@ -11,7 +11,7 @@ export default function Community() {
     else return [];
   };
   const [Posts, setPosts] = useState(getLocalData());
-
+  console.log(Posts);
   const refInput = useRef(null);
   const refTextarea = useRef(null);
 
@@ -81,19 +81,32 @@ export default function Community() {
           </nav>
         </div>
         <div className="showBox">
-          {Posts.map((post, idx) => (
-            <article key={idx}>
-              <div className="txt">
-                <h2>{post.title}</h2>
-                <p>{post.content}</p>
-                {/* <p>{post.date}</p> */}
-              </div>
-              <nav>
-                <button>Edit</button>
-                <button onClick={() => deletePost(idx)}>Delete</button>
-              </nav>
-            </article>
-          ))}
+          {Posts.map((post, idx) => {
+            // 현재 시간 값이 state에 옮겨담아지는 순간에는 객체 값이고
+            // 다음번 렌더링 싸이클에서 useEffect에 의해 문자로 변환된 다음 로컬 저장소에 저장됨
+            // 날짜값을 받는 첫번째 렌더링 타임에는 날짜 값이 객체이므로 split 구문에서 오류 발생
+            // 해결 방법은 처음 렌더링을 도는 시점에서 날짜를 강제로 문자화한 다음 출력처리
+            const stringDate = JSON.stringify(post.date);
+            const textedDate = stringDate
+              .split("T")[0]
+              .split('"')[1]
+              .split("-")
+              .join(".");
+
+            return (
+              <article key={idx}>
+                <div className="txt">
+                  <h2>{post.title}</h2>
+                  <p>{post.content}</p>
+                  <span>{textedDate}</span>
+                </div>
+                <nav>
+                  <button>Edit</button>
+                  <button onClick={() => deletePost(idx)}>Delete</button>
+                </nav>
+              </article>
+            );
+          })}
         </div>
       </div>
     </Layout>
