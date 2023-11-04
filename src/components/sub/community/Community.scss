@@ -57,7 +57,8 @@
         height: 30vh;
         background: rgb(225 225 225);
         padding: 20px;
-        margin-bottom: 20px;
+        // gap은 가로세로 모두 영향을 주니 margin-bottom도 자연스럽게 20px 들어가는 것과 동일
+        // margin-bottom: 20px;
         display: flex;
         flex-wrap: wrap;
         align-content: space-between;
