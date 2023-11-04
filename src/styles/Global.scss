@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap");
+
+:root {
+	--boxGap: 20px;
+	--countColumn: 3;
+}
 
 * {
 	margin: 0;
@@ -6,7 +11,7 @@
 	box-sizing: border-box;
 	color: #111;
 	font-weight: normal;
-	font-family:'Nanum Myeongjo' ;
+	font-family: "Nanum Myeongjo";
 }
 ul,
 ol,
@@ -17,7 +22,6 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
-
 
 html {
 	&::-webkit-scrollbar {

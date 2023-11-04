@@ -48,10 +48,12 @@
       border-left: 1px solid #ddd;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
+      justify-content: flex-start;
+      gap: var(--boxGap);
 
       article {
-        width: 32%;
+        // 실시간 변경이 되어야 하면 sass 변수를 쓰는게 아닌 일반 css 변수를 써야함.
+        width: calc((100% - var(--boxGap) * (var(--countColumn) - 1)) / var(--countColumn));
         height: 30vh;
         background: rgb(225 225 225);
         padding: 20px;
