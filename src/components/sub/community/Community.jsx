@@ -38,7 +38,7 @@ export default function Community() {
   };
 
   const deletePost = (delIdx) => {
-    console.log(delIdx);
+    if (!window.confirm("정말 해당 게시글을 삭제하겠습니까?")) return;
     // === 였을 때는 내가 선택한 것 외에 모두가 사라짐. (필터의 특성)
     // 그래서 !==으로 바꿔주면 선택한 것만 사라짐.
     // Posts.filter로 전달되는 삭제 순번과 현재 반복되는 값의 순번이 같지가 않는것만 배열로 반환 (삭제 순번 값만 제외하고 반환하기 떄문에. 결과적으로 삭제와 동일한 기능)
