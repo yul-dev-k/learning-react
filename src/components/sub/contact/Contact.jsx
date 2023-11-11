@@ -13,14 +13,16 @@ export default function Contact() {
     center: new kakao.maps.LatLng(33.450701, 126.570667),
     level: 3,
   };
+  // 인스턴스가 실행되는게 아니니 마운트와 관계가 없음.
+  const marker = new kakao.maps.Marker({
+    position: mapOption.center,
+  });
+
   useEffect(() => {
     // 인스턴스 복사는 컴포넌트 마운트시 처리
     const map = new kakao.maps.Map(refMapContainer.current, mapOption);
 
-    const markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-    const marker = new kakao.maps.Marker({
-      position: markerPosition,
-    });
+    // 인스턴스가 실행되어야 하는거니, 마운트 이후에 실행 및 렌더 되어야함.
     marker.setMap(map);
 
     kakao.maps.event.addListener(map, "click", function (mouseEvent) {
