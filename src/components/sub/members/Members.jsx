@@ -37,8 +37,14 @@ export default function Members() {
     if (value.userid.length < 5) {
       errs.userid = "아이디는 최소 5글자 이상 입력하세요.";
     }
+    if (value.comments.length < 10) {
+      errs.comments = "남기는 말은 최소 10글자 이상 입력하세요.";
+    }
     if (!value.gender) {
       errs.gender = "성별을 선택해주세요.";
+    }
+    if (!value.edu) {
+      errs.edu = "최종학력을 선택해주세요.";
     }
     if (value.interest.length === 0) {
       errs.interests = "취미를 하나이상 선택하세요.";
@@ -118,18 +124,14 @@ export default function Members() {
                   <tr>
                     <td colSpan="2">
                       <select name="edu" onChange={handleChange}>
-                        <option defaultValue="">Education</option>
-                        <option defaultValue="elementary-school">
-                          초등학교 졸업
-                        </option>
-                        <option defaultValue="middle-school">
-                          중학교 졸업
-                        </option>
-                        <option defaultValue="high-school">
-                          고등학교 졸업
-                        </option>
-                        <option defaultValue="college">대학교 졸업</option>
+                        {/* 어차피 onChange이벤트가 연결되어 있으므로 value값으로 등록 */}
+                        <option value="">Education</option>
+                        <option value="elementary-school">초등학교 졸업</option>
+                        <option value="middle-school">중학교 졸업</option>
+                        <option value="high-school">고등학교 졸업</option>
+                        <option value="college">대학교 졸업</option>
                       </select>
+                      {Errs.edu && <p>{Errs.edu}</p>}
                     </td>
                   </tr>
 
@@ -210,6 +212,7 @@ export default function Members() {
                         value={Val.comments}
                         onChange={handleChange}
                       ></textarea>
+                      {Errs.comments && <p>{Errs.comments}</p>}
                     </td>
                   </tr>
                   <tr>
