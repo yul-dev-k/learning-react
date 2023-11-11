@@ -4,7 +4,6 @@ import "./Members.scss";
 import { useState, useRef, useEffect } from "react";
 
 export default function Members() {
-  console.log("re-render");
   const initVal = useRef({
     userid: "",
     email: "",
@@ -33,6 +32,7 @@ export default function Members() {
   };
 
   const check = (value) => {
+    console.log("check fun calls");
     const errs = {};
     if (value.userid.length < 5) {
       errs.userid = "아이디는 최소 5글자 이상 입력하세요.";
