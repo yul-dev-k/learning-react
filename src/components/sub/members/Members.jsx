@@ -217,8 +217,8 @@ export default function Members() {
                   </tr>
                   <tr>
                     <td colSpan="2">
-                      <button>cancel</button>
-                      <button>submit</button>
+                      <button>Cancel</button>
+                      <button>Submit</button>
                     </td>
                   </tr>
                 </tbody>
