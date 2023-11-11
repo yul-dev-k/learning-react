@@ -70,6 +70,7 @@ export default function Contact() {
           </li>
         ))}
       </ul>
+      <button onClick={setCenter}>위치 초기화</button>
     </Layout>
   );
 }
