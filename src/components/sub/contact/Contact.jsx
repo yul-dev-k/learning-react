@@ -1,39 +1,60 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import Layout from "../../common/layout/Layout";
 import "./Contact.scss";
 
 export default function Contact() {
   const { kakao } = window;
   const mapFrame = useRef(null);
+  const [Index, setIndex] = useState(0);
 
-  const info = [
+  const info = useRef([
     {
-      latlng: new kakao.maps.LatLng(37.51272797391666, 127.06076771220832),
+      title: "삼성역 코엑스",
+      latlng: new kakao.maps.LatLng(37.51100661425726, 127.06162026853143),
       imgSrc: `${process.env.PUBLIC_URL}/img/marker1.png`,
       imgSize: new kakao.maps.Size(232, 99),
       imgPos: { offset: new kakao.maps.Point(116, 99) },
     },
-  ];
+    {
+      title: "넥슨 본사",
+      latlng: new kakao.maps.LatLng(37.40211707077346, 127.10344953763003),
+      imgSrc: `${process.env.PUBLIC_URL}/img/marker2.png`,
+      imgSize: new kakao.maps.Size(232, 99),
+      imgPos: { offset: new kakao.maps.Point(116, 99) },
+    },
+    {
+      title: "서울 시청",
+      latlng: new kakao.maps.LatLng(37.5662952, 126.9779451),
+      imgSrc: `${process.env.PUBLIC_URL}/img/marker3.png`,
+      imgSize: new kakao.maps.Size(232, 99),
+      imgPos: { offset: new kakao.maps.Point(116, 99) },
+    },
+  ]);
 
   const marker = new kakao.maps.Marker({
-    position: info[0].latlang,
+    position: info.current[Index].latlng,
     image: new kakao.maps.MarkerImage(
-      info[0].imgSrc,
-      info[0].imgSize,
-      info[0].imgPos
+      info.current[Index].imgSrc,
+      info.current[Index].imgSize,
+      info.current[Index].imgPos
     ),
   });
 
   useEffect(() => {
     const map = new kakao.maps.Map(mapFrame.current, {
-      center: info[0].latlng,
+      center: info.current[Index].latlng,
     });
     marker.setMap(map);
-  }, []);
+  }, [Index]);
 
   return (
     <Layout title={"Contact us"}>
       <article id="map" ref={mapFrame}></article>
+      <ul className="branch">
+        <li onClick={() => setIndex(0)}>코엑스</li>
+        <li onClick={() => setIndex(1)}>넥슨</li>
+        <li onClick={() => setIndex(2)}>서울시청</li>
+      </ul>
     </Layout>
   );
 }
