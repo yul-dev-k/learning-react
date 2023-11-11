@@ -9,8 +9,12 @@ export default function Contact() {
   const { kakao } = window;
   // api를 적용할 요소도 가상돔이기 때문에 참조 객체에 연결
   const refMapContainer = useRef(null);
+  // 위치값 정밀하게 보정하는 법
+  // 기존 구글지도 위치값 복사 뒤 카카오예제의 클릭한 위치 마커 표시 직접해보기
+  // 해당 코드 붙여넣기하고 원하는 지점을 찍으면아래와 같이 정밀한 수치값을 확인 가능
+  // https://apis.map.kakao.com/web/sample/addMapClickEventWithMarker/
   const mapOption = {
-    center: new kakao.maps.LatLng(37.51345, 127.058682),
+    center: new kakao.maps.LatLng(37.51205098440375, 127.05875950015063),
     level: 3,
   };
   // 인스턴스가 실행되는게 아니니 마운트와 관계가 없음.
