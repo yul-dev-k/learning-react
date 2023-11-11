@@ -37,6 +37,12 @@ export default function Members() {
     if (value.userid.length < 5) {
       errs.userid = "아이디는 최소 5글자 이상 입력하세요.";
     }
+    if (!value.gender) {
+      errs.gender = "성별을 선택해주세요.";
+    }
+    if (value.interest.length === 0) {
+      errs.interests = "취미를 하나이상 선택하세요.";
+    }
     return errs;
   };
 
@@ -147,6 +153,7 @@ export default function Members() {
                         onChange={handleChange}
                       />
                       <label htmlFor="male">Male</label>
+                      {Errs.gender && <p>{Errs.gender}</p>}
                     </td>
                   </tr>
 
@@ -188,6 +195,7 @@ export default function Members() {
                         onChange={handleCheck}
                       />
                       <label htmlFor="game">Game</label>
+                      {Errs.interests && <p>{Errs.interests}</p>}
                     </td>
                   </tr>
 
