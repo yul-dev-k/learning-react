@@ -10,7 +10,7 @@ export default function Contact() {
   // api를 적용할 요소도 가상돔이기 때문에 참조 객체에 연결
   const refMapContainer = useRef(null);
   const mapOption = {
-    center: new kakao.maps.LatLng(33.450701, 126.570667),
+    center: new kakao.maps.LatLng(37.51345, 127.058682),
     level: 3,
   };
   // 인스턴스가 실행되는게 아니니 마운트와 관계가 없음.
@@ -24,14 +24,6 @@ export default function Contact() {
 
     // 인스턴스가 실행되어야 하는거니, 마운트 이후에 실행 및 렌더 되어야함.
     marker.setMap(map);
-
-    kakao.maps.event.addListener(map, "click", function (mouseEvent) {
-      // 클릭한 위도, 경도 정보를 가져옵니다
-      let latlng = mouseEvent.latLng;
-
-      // 마커 위치를 클릭한 위치로 옮깁니다
-      marker.setPosition(latlng);
-    });
   }, []);
 
   return (
