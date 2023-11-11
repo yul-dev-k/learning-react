@@ -22,20 +22,57 @@
       table {
         width: 100%;
 
-        td {
-          padding: 20px 20px;
-          //border-bottom: 1px solid #888;
-          position: relative;
+        tr {
+          td {
+            padding: 30px 20px 10px;
+            position: relative;
 
-          &::after {
-            content: "";
-            display: block;
-            width: calc(100% - 40px);
-            height: 1px;
-            background: #888;
-            position: absolute;
-            bottom: 0;
-            left: 20px;
+            &::after {
+              content: "";
+              display: block;
+              width: calc(100% - 40px);
+              height: 1px;
+              background: #888;
+              position: absolute;
+              bottom: 0;
+              left: 20px;
+            }
+
+            input[type="text"],
+            input[type="password"],
+            textarea {
+              width: 80%;
+              padding: 10px 0px 0px;
+              border: none;
+            }
+            select {
+              width: 100%;
+              border: none;
+            }
+            label {
+              margin-right: 40px;
+              font-size: 1.3rem;
+              color: var(--pointColor);
+            }
+            input[type="checkbox"],
+            input[type="radio"] {
+              margin-right: 10px;
+            }
+            button {
+              background: #333;
+              margin-right: 20px;
+              width: 200px;
+              height: 40px;
+              border: none;
+              font-size: 1.2rem;
+              color: #fff;
+            }
+          }
+
+          &:last-child {
+            td::after {
+              display: none;
+            }
           }
         }
       }
