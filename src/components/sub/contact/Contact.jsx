@@ -5,6 +5,7 @@ import "./Contact.scss";
 export default function Contact() {
   const { kakao } = window;
   const mapFrame = useRef(null);
+  const mapInstance = useRef(null);
   const [Index, setIndex] = useState(0);
 
   const info = useRef([
@@ -40,11 +41,19 @@ export default function Contact() {
     ),
   });
 
+  const setCenter = () => {
+    mapInstance.current.setCenter(info.current[Index].latlng);
+  };
+
   useEffect(() => {
-    const map = new kakao.maps.Map(mapFrame.current, {
+    // 다른 li를 선택하면 div 인스턴스가 계~속 생기면서 마커들이 중첩됐는데, 초기화 함으로써 해결
+    mapFrame.current.innerHTML = "";
+    mapInstance.current = new kakao.maps.Map(mapFrame.current, {
       center: info.current[Index].latlng,
     });
-    marker.setMap(map);
+    marker.setMap(mapInstance.current);
+
+    window.addEventListener("resize", setCenter);
   }, [Index]);
 
   return (
