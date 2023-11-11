@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap");
 
 :root {
+  --pointColor: hotpink;
   --boxGap: 20px;
   --countColumn: 3;
   --countColumn-2: 2;
@@ -44,6 +45,16 @@ button {
 }
 fieldset {
   border: none;
+}
+input,
+textarea {
+  &::placeholder {
+    font-size: 0.9rem;
+    color: var(--pointColor);
+  }
+}
+select {
+  color: var(--pointColor);
 }
 html {
   &::-webkit-scrollbar {
