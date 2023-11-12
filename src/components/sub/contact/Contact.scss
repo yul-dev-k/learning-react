@@ -3,11 +3,17 @@
 		background: orange;
 	}
 
-	#map {
+	#map,
+	#view {
 		width: 100%;
 		height: 50vh;
 		background: #111;
 		margin-bottom: 50px;
+		display: none;
+
+		&.on {
+			display: block;
+		}
 	}
 
 	.branch {

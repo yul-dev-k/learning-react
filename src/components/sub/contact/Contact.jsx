@@ -5,9 +5,11 @@ import "./Contact.scss";
 export default function Contact() {
   const { kakao } = window;
   const mapFrame = useRef(null);
+  const viewFrame = useRef(null);
   const mapInstance = useRef(null);
   const [Index, setIndex] = useState(0);
   const [Traffic, setTraffic] = useState(false);
+  const [View, setView] = useState(true);
 
   const info = useRef([
     {
@@ -53,7 +55,6 @@ export default function Contact() {
     mapInstance.current = new kakao.maps.Map(mapFrame.current, {
       center: info.current[Index].latlng,
     });
-
     // 지도 인스턴스에 맵타입 인스턴스로 타입컨트롤러 추가
     mapInstance.current.addControl(
       new kakao.maps.MapTypeControl(),
@@ -68,6 +69,19 @@ export default function Contact() {
     // 마커 인스턴스에 맵 인스턴스 결합해서 마커 추가
     marker.setMap(mapInstance.current);
     mapInstance.current.setZoomable(false);
+
+    // 로드뷰 인스턴스
+    new kakao.maps.RoadviewClient().getNearestPanoId(
+      info.current[Index].latlng,
+      50,
+      (panoId) => {
+        new kakao.maps.Roadview(viewFrame.current).setPanoId(
+          panoId,
+          info.current[Index].latlng
+        ); //panoId와 중심좌표를 통해 로드뷰 실행
+      }
+    );
+
     setTraffic(false);
 
     window.addEventListener("resize", setCenter);
@@ -88,7 +102,16 @@ export default function Contact() {
 
   return (
     <Layout title={"Contact us"}>
-      <article id="map" ref={mapFrame}></article>
+      <button onClick={() => setView(!View)}>
+        {!View ? "지도뷰 보기" : "로드뷰 보기"}
+      </button>
+      <article id="map" ref={mapFrame} className={View ? "on" : ""}></article>
+      <article
+        id="view"
+        ref={viewFrame}
+        className={!View ? "on" : ""}
+      ></article>
+
       <ul className="branch">
         {info.current.map((data, idx) => (
           <li
