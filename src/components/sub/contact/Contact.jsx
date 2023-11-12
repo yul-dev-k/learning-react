@@ -44,8 +44,24 @@ export default function Contact() {
     ),
   });
 
+  const roadView = () => {
+    // 로드뷰 인스턴스
+    // 두 번째 인수값은 마커 위치로부터 로드뷰가 출력될 수 있는 가장 가까운 거리의 범위 지정
+    new kakao.maps.RoadviewClient().getNearestPanoId(
+      info.current[Index].latlng,
+      50,
+      (panoId) => {
+        new kakao.maps.Roadview(viewFrame.current).setPanoId(
+          panoId,
+          info.current[Index].latlng
+        ); //panoId와 중심좌표를 통해 로드뷰 실행
+      }
+    );
+  };
+
   const setCenter = () => {
     mapInstance.current.setCenter(info.current[Index].latlng);
+    roadView();
   };
 
   useEffect(() => {
@@ -70,18 +86,7 @@ export default function Contact() {
     marker.setMap(mapInstance.current);
     mapInstance.current.setZoomable(false);
 
-    // 로드뷰 인스턴스
-    // 두 번째 인수값은 마커 위치로부터 로드뷰가 출력될 수 있는 가장 가까운 거리의 범위 지정
-    new kakao.maps.RoadviewClient().getNearestPanoId(
-      info.current[Index].latlng,
-      50,
-      (panoId) => {
-        new kakao.maps.Roadview(viewFrame.current).setPanoId(
-          panoId,
-          info.current[Index].latlng
-        ); //panoId와 중심좌표를 통해 로드뷰 실행
-      }
-    );
+    roadView();
 
     setTraffic(false);
 
@@ -126,9 +131,11 @@ export default function Contact() {
       </ul>
 
       <button onClick={setCenter}>위치 초기화</button>
-      <button onClick={() => setTraffic(!Traffic)}>
-        {Traffic ? "교통 정보 끄기" : "교통 정보 보기"}
-      </button>
+      {View && (
+        <button onClick={() => setTraffic(!Traffic)}>
+          {Traffic ? "교통 정보 끄기" : "교통 정보 보기"}
+        </button>
+      )}
     </Layout>
   );
 }
