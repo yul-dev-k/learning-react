@@ -53,6 +53,7 @@ export default function Contact() {
       center: info.current[Index].latlng,
     });
     marker.setMap(mapInstance.current);
+    setTraffic(false);
 
     window.addEventListener("resize", setCenter);
   }, [Index]);
