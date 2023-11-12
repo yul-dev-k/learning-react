@@ -67,7 +67,7 @@ export default function Contact() {
 
     // 마커 인스턴스에 맵 인스턴스 결합해서 마커 추가
     marker.setMap(mapInstance.current);
-
+    mapInstance.current.setZoomable(false);
     setTraffic(false);
 
     window.addEventListener("resize", setCenter);
@@ -100,6 +100,7 @@ export default function Contact() {
           </li>
         ))}
       </ul>
+
       <button onClick={setCenter}>위치 초기화</button>
       <button onClick={() => setTraffic(!Traffic)}>
         {Traffic ? "교통 정보 끄기" : "교통 정보 보기"}
