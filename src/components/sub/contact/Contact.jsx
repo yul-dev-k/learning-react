@@ -113,7 +113,11 @@ export default function Contact() {
 
   const sendEmail = (e) => {
     e.preventDefault();
+    const [user, email] = form.current.querySelectorAll("input");
+    const textarea = form.current.querySelector("textarea");
 
+    if (!user.value || !email.value || !textarea.value)
+      return alert("모두 입력하세요.");
     emailjs
       .sendForm(
         `service_ayc9mr9`,
@@ -123,10 +127,13 @@ export default function Contact() {
       )
       .then(
         (result) => {
-          console.log(result.text);
+          alert("문의 내용이 성공적으로 전달됐습니다.");
+
+          [user, email, textarea].forEach((el) => (el.value = ""));
         },
         (error) => {
-          console.log(error.text);
+          alert("문의 내용 전송이 실패했습니다.");
+          console.error(error.text);
         }
       );
   };
