@@ -47,12 +47,27 @@ export default function Contact() {
   };
 
   useEffect(() => {
-    // 다른 li를 선택하면 div 인스턴스가 계~속 생기면서 마커들이 중첩됐는데, 초기화 함으로써 해결
     mapFrame.current.innerHTML = "";
+
+    // 지도 인스턴스 생성해서 지도화면 렌더링
     mapInstance.current = new kakao.maps.Map(mapFrame.current, {
       center: info.current[Index].latlng,
     });
+
+    // 지도 인스턴스에 맵타입 인스턴스로 타입컨트롤러 추가
+    mapInstance.current.addControl(
+      new kakao.maps.MapTypeControl(),
+      kakao.maps.ControlPosition.TOPRIGHT
+    );
+    // 지도 인스턴스에 줌타입 인스턴스로 줌컨트롤러 추가
+    mapInstance.current.addControl(
+      new kakao.maps.ZoomControl(),
+      kakao.maps.ControlPosition.RIGHT
+    );
+
+    // 마커 인스턴스에 맵 인스턴스 결합해서 마커 추가
     marker.setMap(mapInstance.current);
+
     setTraffic(false);
 
     window.addEventListener("resize", setCenter);
