@@ -71,6 +71,7 @@ export default function Contact() {
     mapInstance.current.setZoomable(false);
 
     // 로드뷰 인스턴스
+    // 두 번째 인수값은 마커 위치로부터 로드뷰가 출력될 수 있는 가장 가까운 거리의 범위 지정
     new kakao.maps.RoadviewClient().getNearestPanoId(
       info.current[Index].latlng,
       50,
