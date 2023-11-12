@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+import emailjs from "@emailjs/browser";
 import Layout from "../../common/layout/Layout";
 import "./Contact.scss";
 
@@ -7,6 +8,10 @@ export default function Contact() {
   const mapFrame = useRef(null);
   const viewFrame = useRef(null);
   const mapInstance = useRef(null);
+  // 공식 문서에 const form = useRef(); 이렇게 ref에 비어있는데 null을 넣어준이유
+  // 빈값이 변수에 할당 되있으면 메모리를 많이 잡아먹기 때문
+  // 가비지컬렉터가 언제 실행될지 모르니 메모리 누수를 줄이기 위해서
+  const form = useRef(null);
   const [Index, setIndex] = useState(0);
   const [Traffic, setTraffic] = useState(false);
   const [View, setView] = useState(true);
@@ -106,36 +111,69 @@ export default function Contact() {
     return () => window.removeEventListener("resize", setCenter);
   });
 
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "YOUR_SERVICE_ID",
+        "YOUR_TEMPLATE_ID",
+        form.current,
+        "YOUR_PUBLIC_KEY"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
+
   return (
     <Layout title={"Contact us"}>
-      <button onClick={() => setView(!View)}>
-        {!View ? "지도뷰 보기" : "로드뷰 보기"}
-      </button>
-      <article id="map" ref={mapFrame} className={View ? "on" : ""}></article>
-      <article
-        id="view"
-        ref={viewFrame}
-        className={!View ? "on" : ""}
-      ></article>
-
-      <ul className="branch">
-        {info.current.map((data, idx) => (
-          <li
-            key={idx}
-            className={idx === Index ? "on" : ""}
-            onClick={() => setIndex(idx)}
-          >
-            {data.title}
-          </li>
-        ))}
-      </ul>
-
-      <button onClick={setCenter}>위치 초기화</button>
-      {View && (
-        <button onClick={() => setTraffic(!Traffic)}>
-          {Traffic ? "교통 정보 끄기" : "교통 정보 보기"}
+      <div className="mailBox">
+        <form ref={form} onSubmit={sendEmail}>
+          <label>Name</label>
+          <input type="text" name="user_name" />
+          <label>Email</label>
+          <input type="email" name="user_email" />
+          <label>Message</label>
+          <textarea name="message" />
+          <input type="submit" value="Send" />
+        </form>
+      </div>
+      <div className="mapBox">
+        <button onClick={() => setView(!View)}>
+          {!View ? "지도뷰 보기" : "로드뷰 보기"}
         </button>
-      )}
+        <article id="map" ref={mapFrame} className={View ? "on" : ""}></article>
+        <article
+          id="view"
+          ref={viewFrame}
+          className={!View ? "on" : ""}
+        ></article>
+
+        <ul className="branch">
+          {info.current.map((data, idx) => (
+            <li
+              key={idx}
+              className={idx === Index ? "on" : ""}
+              onClick={() => setIndex(idx)}
+            >
+              {data.title}
+            </li>
+          ))}
+        </ul>
+
+        <button onClick={setCenter}>위치 초기화</button>
+        {View && (
+          <button onClick={() => setTraffic(!Traffic)}>
+            {Traffic ? "교통 정보 끄기" : "교통 정보 보기"}
+          </button>
+        )}
+      </div>
     </Layout>
   );
 }

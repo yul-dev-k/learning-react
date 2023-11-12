@@ -3,23 +3,28 @@
 		background: orange;
 	}
 
-	#map,
-	#view {
-		width: 100%;
-		height: 50vh;
-		background: #111;
-		margin-bottom: 50px;
-		display: none;
-
-		&.on {
-			display: block;
-		}
+	.mailBox {
 	}
 
-	.branch {
-		li {
+	.mapBox {
+		#map,
+		#view {
+			width: 100%;
+			height: 50vh;
+			background: #111;
+			margin-bottom: 50px;
+			display: none;
+
 			&.on {
-				color: hotpink;
+				display: block;
+			}
+		}
+
+		.branch {
+			li {
+				&.on {
+					color: hotpink;
+				}
 			}
 		}
 	}
