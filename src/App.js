@@ -1,5 +1,8 @@
 import Footer from "./components/common/footer/Footer";
 import Header from "./components/common/header/Header";
+import Banner from "./components/main/banner/Banner";
+import Info from "./components/main/info/Info";
+import MainWeb from "./components/main/mainWeb/MainWeb";
 import News from "./components/main/news/News";
 import Visual from "./components/main/visual/Visual";
 import Community from "./components/sub/community/Community";
@@ -20,8 +23,7 @@ function App() {
 
       {/* visual은 main 라우트에만 보여야 하니 /일 때만 보여야함. 그러나 path='/'만 적혀있다면 모든 /가 붙는 경로에 다 보이게 됨. 그러므로 exact 라는 걸 포함해주면 다른 페이지에서 보이지 않음. */}
       <Route exact path="/">
-        <Visual />
-        <News />
+        <MainWeb />
       </Route>
       <Route path="/department" component={Department} />
       <Route path="/gallery" component={Gallery} />
