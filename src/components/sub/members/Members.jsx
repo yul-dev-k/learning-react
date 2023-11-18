@@ -1,9 +1,11 @@
+import { useHistory } from "react-router-dom";
 import { useSplitText } from "../../../hooks/useSplitText";
 import Layout from "../../common/layout/Layout";
 import "./Members.scss";
 import { useState, useRef, useEffect } from "react";
 
 export default function Members() {
+  const history = useHistory();
   const initVal = useRef({
     userid: "",
     email: "",
@@ -84,6 +86,7 @@ export default function Members() {
     e.preventDefault();
     if (Object.keys(check(Val)).length === 0) {
       alert("회원 가입을 축하합니다.");
+      history.push("/");
     }
   };
 
