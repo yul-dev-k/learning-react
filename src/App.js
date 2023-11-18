@@ -14,17 +14,22 @@ import Detail from "./components/sub/youtube/Detail";
 import Youtube from "./components/sub/youtube/Youtube";
 import { useMedia } from "./hooks/useMedia";
 import "./styles/Global.scss";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 function App() {
   return (
     <main className={useMedia({ tablet: 800 })}>
-      <Header />
-
       {/* visual은 main 라우트에만 보여야 하니 /일 때만 보여야함. 그러나 path='/'만 적혀있다면 모든 /가 붙는 경로에 다 보이게 됨. 그러므로 exact 라는 걸 포함해주면 다른 페이지에서 보이지 않음. */}
-      <Route exact path="/">
-        <MainWeb />
-      </Route>
+      {/* 중첩된 라우터로 복수개의 동일한 컴포넌트가 연결될 때 처음 연결라우터만 호출하고 나머지는 무시 */}
+      <Switch>
+        <Route exact path="/">
+          <Header isMain={true} />
+          <MainWeb />
+        </Route>
+        <Route path="/">
+          <Header isMain={false} />
+        </Route>
+      </Switch>
       <Route path="/department" component={Department} />
       <Route path="/gallery" component={Gallery} />
       <Route path="/youtube" component={Youtube} />
