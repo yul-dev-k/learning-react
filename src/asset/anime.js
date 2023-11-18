@@ -1,3 +1,5 @@
+import BezierEasing from "bezier-easing";
+
 export class Anime {
   #defOpt = { duration: 500, callback: null, easeType: "linear" };
 
