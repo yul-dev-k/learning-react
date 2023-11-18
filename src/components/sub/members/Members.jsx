@@ -80,6 +80,13 @@ export default function Members() {
     return errs;
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (Object.keys(check(Val)).length === 0) {
+      alert("회원 가입을 축하합니다.");
+    }
+  };
+
   useEffect(() => {
     setErrs(check(Val));
   }, [Val]);
@@ -98,7 +105,7 @@ export default function Members() {
           <h2>Join Members</h2>
         </div>
         <div className="formBox">
-          <form>
+          <form onSubmit={handleSubmit}>
             <fieldset>
               <legend className="h">회원가입 폼</legend>
               <table>
