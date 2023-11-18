@@ -6,8 +6,8 @@ header {
   justify-content: space-between;
 
   h1 {
-    font: bold 2rem/1 'nanum myeongjo';
-    color:#222
+    font: bold 2rem/1 "nanum myeongjo";
+    color: #222;
   }
 
   ul {
@@ -17,7 +17,7 @@ header {
 
     li a {
       color: #555;
-      
+
       // 부모 선택자 뒤에 띄어쓰기 하면 적용 안됨.
       &.on {
         color: hotpink;
@@ -30,7 +30,19 @@ header {
   }
 }
 
-.tablet, .mobile {
+header.main {
+  width: 100%;
+  padding: 5vh 15vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent;
+  z-index: 2;
+  border-bottom: none;
+}
+
+.tablet,
+.mobile {
   header {
     ul {
       display: none;
