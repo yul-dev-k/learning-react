@@ -32,6 +32,9 @@ export default function Members() {
   };
 
   const check = (value) => {
+    const txt = /[a=zA-z]/;
+    const num = /[0-9]/;
+    const spc = /[!@#$%^&*()_+]/;
     console.log("check fun calls");
     const errs = {};
     if (value.userid.length < 5) {
@@ -61,6 +64,18 @@ export default function Members() {
           errs.email = "이메일 .앞뒤로 문자값이 있어야 합니다.";
         }
       }
+    }
+    if (
+      value.pwd1.length < 5 ||
+      !txt.test(value.pwd1) ||
+      !num.test(value.pwd1) ||
+      !spc.test(value.pwd1)
+    ) {
+      errs.pwd1 =
+        "비밀번호는 특수문자, 영문, 숫자 포함해서 5글자 이상 포함해주세요.";
+    }
+    if (value.pwd1 !== value.pwd2 || !value.pwd2) {
+      errs.pwd2 = "두 개의 비밀번호를 같게 입력하세요.";
     }
     return errs;
   };
@@ -122,6 +137,7 @@ export default function Members() {
                         value={Val.pwd1}
                         onChange={handleChange}
                       />
+                      {Errs.pwd1 && <p>{Errs.pwd1}</p>}
                     </td>
                     <td>
                       <input
@@ -131,6 +147,7 @@ export default function Members() {
                         value={Val.pwd2}
                         onChange={handleChange}
                       />
+                      {Errs.pwd2 && <p>{Errs.pwd2}</p>}
                     </td>
                   </tr>
 
@@ -231,8 +248,8 @@ export default function Members() {
                   </tr>
                   <tr>
                     <td colSpan="2">
-                      <button>Cancel</button>
-                      <button>Submit</button>
+                      <input type="reset" value="Cancle" />
+                      <input type="submit" value="Submit" />
                     </td>
                   </tr>
                 </tbody>
