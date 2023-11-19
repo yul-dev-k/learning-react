@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import Child from "./Child";
 
-export default function Test() {
-  return <div></div>;
+export default function Parent() {
+  console.log("parent");
+  const [Count, setCount] = useState(0);
+  return (
+    <div>
+      <div>
+        <h1>{Count}</h1>
+        <button onClick={() => setCount(Count - 1)}>minus</button>
+        <button onClick={() => setCount(Count + 1)}>plus</button>
+      </div>
+      {/* 
+      부모 컴포넌트 재호출 시 재호출될 필요 없는 자식 컴포넌트까지 무조건 강제 재호출됨
+      해결방법: 자식 컴포넌트를 static한 상태로 강제 메모리 등록
+      */}
+      <Child />
+    </div>
+  );
 }
 
 /* 
@@ -18,4 +34,6 @@ export default function Test() {
   - memo : 특정 컴포넌트 자체를 메모이제이션
   - useCallback : 컴포넌트 안쪽의 특정 핸들러 함수를 메모이제이션
   - useMemo : 특정 함수가 반환하는 값 자체를 메모이제이션
+
+  But, 아무런 로직 없이 JSX만 생성되는 컴포넌트는 기회 비용이 적기 때문에 메모이제이션이 더 불필요한 메모리 소비를 야기시키니 주의
 */
