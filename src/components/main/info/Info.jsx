@@ -10,6 +10,7 @@ export default function Info() {
   const handleScroll = () => {
     const modifiedScroll = getScroll(currentEl);
     boxEl.current.style.transform = `rotate(${modifiedScroll}deg)`;
+    boxEl.current.style.opacity = modifiedScroll / 100;
   };
 
   useEffect(() => {
