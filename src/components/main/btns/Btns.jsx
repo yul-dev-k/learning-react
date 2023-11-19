@@ -3,8 +3,9 @@ import "./Btns.scss";
 import { useRef, useEffect, useState } from "react";
 
 export default function Btns() {
-  // 활성화 순번, 버튼 그룹요소, section 그룹요소가 담길 참조 객체 생성
-  const num = useRef(0);
+  // section의 전체 갯수가 담길 값을 참조객체에서 state로 변경
+  // Num값 변경 시 컴포넌트가 재렌더링 되어야 버튼이 생기므로 state 처리
+  const [Num, setNum] = useState(0);
   const secs = useRef(null);
   const btns = useRef(null);
 
@@ -17,7 +18,7 @@ export default function Btns() {
         Array.from(btns.current.children).forEach((btn) =>
           btn.classList.remove("on")
         );
-        btns.current.children[idx].classList.add("on");
+        btns.current.children[idx]?.classList.add("on");
       }
     });
   };
@@ -34,7 +35,7 @@ export default function Btns() {
   useEffect(() => {
     // 빈 참조 객체에 버튼과 section 요소를 담아줌
     secs.current = document.querySelectorAll(".myScroll");
-    num.current = secs.current.length;
+    setNum(secs.current.length);
 
     // window scroll 이벤트에 activation함수 연결
     window.addEventListener("scroll", activation);
@@ -42,10 +43,9 @@ export default function Btns() {
     return () => window.removeEventListener("scroll", activation);
   }, []);
 
-  console.log(num.current);
   return (
     <ul className="btns" ref={btns}>
-      {Array(num.current)
+      {Array(Num)
         .fill()
         .map((_, idx) => {
           return (
