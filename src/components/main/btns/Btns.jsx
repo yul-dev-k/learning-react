@@ -18,7 +18,11 @@ export default function Btns() {
         Array.from(btns.current.children).forEach((btn) =>
           btn.classList.remove("on")
         );
+        // btns의 li 요소가 동적으로 생성되기 전에 호출 시 오류를 피하기 위해서 optional chaining 처리
         btns.current.children[idx]?.classList.add("on");
+
+        secs.current.forEach((sec) => sec.classList.remove("on"));
+        secs.current[idx]?.classList.add("on");
       }
     });
   };
@@ -27,7 +31,7 @@ export default function Btns() {
     new Anime(
       window,
       { scroll: secs.current[idx].offsetTop },
-      { duration: 500, easeType: "ease1" }
+      { duration: 500 }
     );
   };
 
@@ -42,6 +46,14 @@ export default function Btns() {
 
     return () => window.removeEventListener("scroll", activation);
   }, []);
+
+  // Nym state 변경시 activation 호출
+  useEffect(() => {
+    // 마운트시 section의 첫 번째 요소에 on을 붙여주기 위함
+    activation();
+    // Num값이 바뀌는 순간은 마운트가 된 이후 section이 동적으로 생기는 딱 그 한 순간이므로, useEffect의 의존성 배열에 들어감.
+    // 위 useEffect에서 쓰지 않은 이유는, 위 useEffect는 딱 처음만, 마운트되고 딱 처음만 실행되어야 하므로 useEffect를 따로 빼준것
+  }, [Num]);
 
   return (
     <ul className="btns" ref={btns}>
