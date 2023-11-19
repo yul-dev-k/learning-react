@@ -43,7 +43,6 @@ export default function Btns() {
 
     // window scroll 이벤트에 activation함수 연결
     window.addEventListener("scroll", activation);
-
     return () => window.removeEventListener("scroll", activation);
   }, []);
 
