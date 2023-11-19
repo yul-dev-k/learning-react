@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import "./Banner.scss";
 import { useGetCurrentScroll } from "../../../hooks/useGetCurrentScroll";
+import "./Banner.scss";
 
 export default function Banner() {
   const currentEl = useRef(null);
