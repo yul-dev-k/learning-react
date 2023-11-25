@@ -48,7 +48,7 @@ export default function Btns() {
   // 컴포넌트 마운트시
   useEffect(() => {
     // 빈 참조 객체에 버튼과 section 요소를 담아줌
-    secs.current = document.querySelectorAll(".myScroll");
+    secs.current = btns.current.parentElement.querySelectorAll(".myScroll");
     setNum(secs.current.length);
 
     // window scroll 이벤트에 activation함수 연결
