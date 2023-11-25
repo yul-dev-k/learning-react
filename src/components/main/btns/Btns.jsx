@@ -32,7 +32,7 @@ export default function Btns() {
 
   // 컴포넌트 마운티시 윈도우 스크롤 이벤트에 연결될 함수
   const activation = () => {
-    console.log("activation");
+    /*  */
     const scroll = window.scrollY;
 
     secs.current.forEach((el, idx) => {
@@ -66,10 +66,10 @@ export default function Btns() {
     secs.current = btns.current.parentElement.querySelectorAll(".myScroll");
     setNum(secs.current.length);
 
-    // window scroll 이벤트에 activation2함수 연결
+    // window scroll 이벤트에 activation함수 연결
     window.addEventListener("scroll", activation2);
     return () => window.removeEventListener("scroll", activation2);
-  }, []);
+  }, [activation2]);
 
   // Nym state 변경시 activation 호출
   useEffect(() => {
