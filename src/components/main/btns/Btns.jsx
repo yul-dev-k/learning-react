@@ -29,34 +29,29 @@ export default function Btns() {
   const [Num, setNum] = useState(0);
   const secs = useRef(null);
   const btns = useRef(null);
-  const eventBlocker = useRef(null);
 
   // 컴포넌트 마운티시 윈도우 스크롤 이벤트에 연결될 함수
   const activation = () => {
-    // eventBlocker 참조 객체 값이 있으면 return으로 함수 종료
-    if (eventBlocker.current) return;
-    //activation함수를 setTimeout을 묶어놓은 다음에 setTimeout이 끝나야지만 eventBlocker값을 비움으로써
-    //강제로 0.5초동안 함수 호출을 막아줌
-    eventBlocker.current = setTimeout(() => {
-      console.log("activation");
-      const scroll = window.scrollY;
+    console.log("activation");
+    const scroll = window.scrollY;
 
-      secs.current.forEach((el, idx) => {
-        if (scroll >= el.offsetTop - window.innerHeight / 2) {
-          Array.from(btns.current.children).forEach((btn) =>
-            btn.classList.remove("on")
-          );
-          // btns의 li 요소가 동적으로 생성되기 전에 호출 시 오류를 피하기 위해서 optional chaining 처리
-          btns.current.children[idx]?.classList.add("on");
+    secs.current.forEach((el, idx) => {
+      if (scroll >= el.offsetTop - window.innerHeight / 2) {
+        Array.from(btns.current.children).forEach((btn) =>
+          btn.classList.remove("on")
+        );
+        // btns의 li 요소가 동적으로 생성되기 전에 호출 시 오류를 피하기 위해서 optional chaining 처리
+        btns.current.children[idx]?.classList.add("on");
 
-          secs.current.forEach((sec) => sec.classList.remove("on"));
-          secs.current[idx]?.classList.add("on");
-        }
-      });
-      eventBlocker.current = null;
-    }, 500);
+        secs.current.forEach((sec) => sec.classList.remove("on"));
+        secs.current[idx]?.classList.add("on");
+      }
+    });
   };
 
+  // useThrottle 커스텀훅의 인수로 activation함수를 전달해서
+  // throttle이 적용된 activation2라는 함수를 반환 받음
+  const activation2 = useThrottle(activation);
   const handleClick = (idx) => {
     new Anime(
       window,
@@ -71,9 +66,9 @@ export default function Btns() {
     secs.current = btns.current.parentElement.querySelectorAll(".myScroll");
     setNum(secs.current.length);
 
-    // window scroll 이벤트에 activation함수 연결
-    window.addEventListener("scroll", activation);
-    return () => window.removeEventListener("scroll", activation);
+    // window scroll 이벤트에 activation2함수 연결
+    window.addEventListener("scroll", activation2);
+    return () => window.removeEventListener("scroll", activation2);
   }, []);
 
   // Nym state 변경시 activation 호출
