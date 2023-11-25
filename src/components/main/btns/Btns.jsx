@@ -3,13 +3,23 @@ import "./Btns.scss";
 import { useRef, useEffect, useState } from "react";
 
 /* 
-  document.querySelector vs useRef(DOM) (둘 다 real DOM 제어)
-  document.querySelector : 이미 이전 렌더링 사이클에서 DOM으로 변경된 신뢰할 수 없는 예전 DOM
-  useRef : 똑같이 real DOM을 담긴 하지만, 앞으로 real DOM으로 변화될 신뢰할 수 있는 최신 DOM 상태
+  useCallback: 함수 자체를 메모이제이션해서 해당 함수를 재활용
+  useMemo: 함수의 return 값 자체를 메모이제이션
+  memo: 컴포넌트 자체를 메모잊이션
 
-  state vs useRef 해당 값의 변경 및 적용 시점
-  state값은 해당 렌더링 사이클에서 값이 변경되는 것은 맞지만 실제 그 값이 적용되는 시늠은 다음번 렌더링 사이클
-  useRef는 해당 렌더링 사이클에서 값도 변경되고 바로 반영도 됨
+
+  고차 컴포넌트(hoc): High order Component
+  인수로 컴포넌트를 전달 받아서 새로운 컴포넌를 반환
+
+  hook의 조건
+  1. 이름이 use로 시작
+  2. custom hook은 무조건 함수나 리턴값을 반환
+  3. 다른 훅이나 핸드러 함수 안쪽에서 호출이 불가. 컴포넌트 함수 안쪽에서만 호불 가능
+*/
+
+/* 
+  throttle: 강제로 이벤트 핸들러 호출횟수를 압박해서 줄이는 기법
+  - scroll, resize, mousmove, mousewheel : 단기간에 많은 핸드러를 호출하는 이벤트 (1초 60번 화면 주사율 60hz)
 */
 
 export default function Btns() {
